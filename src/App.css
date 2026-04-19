@@ -1,0 +1,60 @@
+/* Custom styles untuk App */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* body {
+  margin: 0;
+  font-family: 'Mona Sans', 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+} */
+
+@media print {
+  /* 1. Atur Kertas Landscape & Hapus Margin Browser */
+  @page {
+    size: A4 landscape;
+    margin: 0; 
+  }
+
+  /* 2. PAKSA SEMUA HALAMAN KELUAR (Solusi Masalah Anda) */
+  html, body {
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  /* Container utama dashboard tidak boleh dibatasi h-screen saat print */
+  .min-h-screen {
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Sembunyikan elemen navigasi atau tombol export */
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* Container pembungkus harus lebar penuh */
+  .print-container {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 15mm !important; /* Margin dalam agar rapi */
+    background-color: white !important;
+    display: block !important;
+  }
+
+  /* Mencegah satu card terpotong jadi dua di beda halaman */
+  .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 30px !important;
+    display: block !important;
+  }
+
+  /* Munculkan warna chart & background */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
