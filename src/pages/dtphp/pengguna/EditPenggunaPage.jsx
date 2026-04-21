@@ -6,7 +6,7 @@ const EditPenggunaPage = () => {
     const navigate = useNavigate();
 
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-    const [isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
+    // const [isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
 
     const [formData, setFormData] = useState({
         nama: 'Affendi Kos',

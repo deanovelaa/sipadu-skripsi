@@ -11,7 +11,6 @@ const GlobalSidebar = () => {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   // Helper untuk menentukan prefix route berdasarkan posisi user
-  const isKecamatan = location.pathname.startsWith("/kecamatan");
   const isDTPHP = location.pathname.startsWith("/dtphp");
   const isPimpinan = location.pathname.startsWith("/pimpinan");
 

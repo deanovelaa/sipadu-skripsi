@@ -1943,19 +1943,7 @@ const DashboardKecamatanPage = () => {
                     <span className="text-[12px] font-medium text-black ">
                       Kecamatan
                     </span>
-                    <svg
-                      className="w-3 h-3 text-black"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                      />
-                    </svg>
+                    
                   </div>
                 </th>
                 <th className="py-4 px-4 text-[12px] font-medium text-black ">
@@ -2005,17 +1993,7 @@ const DashboardKecamatanPage = () => {
                   <td className="py-5 px-4 text-[12px] font-medium text-black">
                     {row.produksi}
                   </td>
-                  <td className="py-5 px-6 text-right">
-                    <button className="text-gray-300 hover:text-gray-500 transition-colors">
-                      <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM18 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                    </button>
-                  </td>
+              
                 </tr>
               ))}
             </tbody>
