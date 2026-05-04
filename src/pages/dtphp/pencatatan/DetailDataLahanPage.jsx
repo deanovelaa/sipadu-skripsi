@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 const DetailDataLahanPage = () => {
   const navigate = useNavigate();
-  const [isFilterApplied, setIsFilterApplied] = useState(false);
   const [selectedYear, setSelectedYear] = useState('2020');
   const [selectedLocation, setSelectedLocation] = useState('Kencong');
   const [desaSearch, setDesaSearch] = useState('');
@@ -12,6 +11,8 @@ const DetailDataLahanPage = () => {
   const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
   const [expandedDesa, setExpandedDesa] = useState([]);
   const [showPercentage, setShowPercentage] = useState(true);
+  const [_isFilterApplied, setIsFilterApplied] = useState(false);
+  const [_isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
 
   const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
@@ -25,6 +26,7 @@ const DetailDataLahanPage = () => {
   const locations = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
   // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
+  // eslint-disable-next-line no-unused-vars
   const [rows, setRows] = useState([
     {
       id: 1,

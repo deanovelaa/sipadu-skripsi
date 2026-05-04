@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const DetailDataPanenPage = () => {
     const navigate = useNavigate();
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
+    const [_isFilterApplied, setIsFilterApplied] = useState(false);
     const [selectedKomoditi, setSelectedKomoditi] = useState('Semua Komoditi');
     const [selectedBulan, setSelectedBulan] = useState('Semua Bulan');
     const [selectedYear, setSelectedYear] = useState('2020');
@@ -16,6 +16,7 @@ const DetailDataPanenPage = () => {
     const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
     const [expandedDesa, setExpandedDesa] = useState([]);
     const [showPercentage, setShowPercentage] = useState(true);
+    const [_isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
 
     const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
     const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
@@ -47,7 +48,7 @@ const DetailDataPanenPage = () => {
     const locationOptions = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
     // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
-    const [rows, setRows] = useState([
+    const rows = useState([
         {
             id: 1,
             desa: 'Paseban',
@@ -485,7 +486,7 @@ const DetailDataPanenPage = () => {
         return { label, isPositive };
     };
 
-    const getChildTrend = (childId, year) => {
+    const _getChildTrend = (childId, year) => {
         const base = childId.split('').reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
         const y = parseInt(year, 10) || 0;
         let val = ((base + y * 7) % 31) - 15; // -15 .. 15
@@ -919,7 +920,7 @@ const DetailDataPanenPage = () => {
                     <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[550px] px-6 py-8 relative">
                         {/* Tombol Close */}
                         <button
-                            onClick={() => setIsConfirmUploadOpen(false)}
+                            onClick={() => setIsConfirmUploadOpen(true)}
                             className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"
                         >
                             <svg

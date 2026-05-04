@@ -36,95 +36,216 @@ const DatabasePage = () => {
   const [selectedKecamatan, setSelectedKecamatan] = useState('Semua Kecamatan');
   const [expandedItems, setExpandedItems] = useState(['Kencong', 'Jagung', 'Padi']);
 
-  // --- Data Source Lengkap (2020 - 2025) ---
-  const allData = {
-    'Data Lahan Produksi': [
-      // DATA 2025
-      { kecamatan: 'Kencong', totalLuas: '5,000', tren: '+90%', tahun: '2025', desa: [{ nama: 'Paseban', luas: '1,000', tren: '+90%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }, { nama: 'Cakru', luas: '1,000', tren: '+80%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
-      { kecamatan: 'Gumukmas', totalLuas: '4,500', tren: '+10%', tahun: '2025', desa: [{ nama: 'Bagorejo', luas: '2,000', tren: '+5%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
-      // DATA 2024
-      { kecamatan: 'Kencong', totalLuas: '4,200', tren: '+15%', tahun: '2024', desa: [{ nama: 'Paseban', luas: '900', tren: '+5%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
-      { kecamatan: 'Puger', totalLuas: '3,800', tren: '+8%', tahun: '2024', desa: [{ nama: 'Grenden', luas: '1,800', tren: '+4%', jenis: 'Sawah Tadah Hujan', status: 'Sewa', air: 'Pompa', pemanfaatan: 'Lahan Aktif Ditanami' }] },
-      // DATA 2023
-      { kecamatan: 'Wuluhan', totalLuas: '4,100', tren: '+5%', tahun: '2023', desa: [{ nama: 'Dukuhdempit', luas: '1,500', tren: '+2%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
-      { kecamatan: 'Kencong', totalLuas: '3,900', tren: '+10%', tahun: '2023', desa: [{ nama: 'Kraton', luas: '1,200', tren: '+6%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
-      // DATA 2022
-      { kecamatan: 'Ambulu', totalLuas: '3,500', tren: '+3%', tahun: '2022', desa: [{ nama: 'Sumberejo', luas: '1,100', tren: '+1%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
-      // DATA 2021
-      { kecamatan: 'Gumukmas', totalLuas: '3,800', tren: '+2%', tahun: '2021', desa: [{ nama: 'Menampu', luas: '1,000', tren: '+1%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
-      // DATA 2020
-      { kecamatan: 'Puger', totalLuas: '3,000', tren: '+0%', tahun: '2020', desa: [{ nama: 'Puger Kulon', luas: '800', tren: '+0%', jenis: 'Sawah Tadah Hujan', status: 'Milik Sendiri', air: 'Pompa', pemanfaatan: 'Lahan Aktif Ditanami' }] },
-    ],
-    'Data Produksi Panen': [
-      // DATA 2025 — Pangan
-      { komoditi: 'Jagung', bulan: 'Januari', luasTanam: '6,246', panenKotor: '6,200', panenBersih: '6,100', produktivitas: '65.5', produksiTon: '6,246', tren: '+35%', tahun: '2025', kecamatans: [{ nama: 'Kencong', luas: '1,246', pKotor: '1,200', pBersih: '1,150', produktivitas: '62.0', produksi: '1,200', tren: '+35%' }] },
-      { komoditi: 'Padi', bulan: 'Februari', luasTanam: '12,500', panenKotor: '12,000', panenBersih: '11,800', produktivitas: '72.1', produksiTon: '15,000', tren: '+12%', tahun: '2025', kecamatans: [{ nama: 'Puger', luas: '4,500', pKotor: '4,200', pBersih: '4,100', produktivitas: '70.5', produksi: '6,000', tren: '+14%' }] },
-      { komoditi: 'Kedelai', bulan: 'Maret', luasTanam: '1,800', panenKotor: '1,700', panenBersih: '1,650', produktivitas: '14.2', produksiTon: '720', tren: '+6%', tahun: '2025', kecamatans: [{ nama: 'Kencong', luas: '600', pKotor: '580', pBersih: '550', produktivitas: '13.5', produksi: '240', tren: '+4%' }] },
-      // Hortikultura
-      { komoditi: 'Bawang Merah', bulan: 'April', luasTanam: '420', panenKotor: '400', panenBersih: '390', produktivitas: '8.2', produksiTon: '95', tren: '+3%', tahun: '2025', kecamatans: [{ nama: 'Wuluhan', luas: '200', pKotor: '190', pBersih: '185', produktivitas: '8.0', produksi: '42', tren: '+2%' }] },
-      { komoditi: 'Bawang Putih', bulan: 'Mei', luasTanam: '310', panenKotor: '295', panenBersih: '288', produktivitas: '7.5', produksiTon: '62', tren: '+2%', tahun: '2025', kecamatans: [{ nama: 'Ambulu', luas: '150', pKotor: '145', pBersih: '140', produktivitas: '7.2', produksi: '28', tren: '+1%' }] },
-      // Kebun
-      { komoditi: 'Kopi', bulan: 'Desember', luasTanam: '2,100', panenKotor: '2,000', panenBersih: '1,950', produktivitas: '4.2', produksiTon: '180', tren: '+4%', tahun: '2025', kecamatans: [{ nama: 'Gumukmas', luas: '900', pKotor: '860', pBersih: '840', produktivitas: '4.0', produksi: '78', tren: '+3%' }] },
-      { komoditi: 'Teh', bulan: 'Oktober', luasTanam: '1,400', panenKotor: '1,350', panenBersih: '1,320', produktivitas: '3.8', produksiTon: '120', tren: '+2%', tahun: '2025', kecamatans: [{ nama: 'Puger', luas: '600', pKotor: '580', pBersih: '570', produktivitas: '3.6', produksi: '52', tren: '+1%' }] },
-      // DATA 2024
-      { komoditi: 'Jagung', bulan: 'September', luasTanam: '5,800', panenKotor: '5,500', panenBersih: '5,400', produktivitas: '60.2', produksiTon: '5,200', tren: '+20%', tahun: '2024', kecamatans: [{ nama: 'Gumukmas', luas: '1,000', pKotor: '950', pBersih: '900', produktivitas: '58.0', produksi: '1,000', tren: '+15%' }] },
-      { komoditi: 'Kedelai', bulan: 'Agustus', luasTanam: '2,000', panenKotor: '1,800', panenBersih: '1,750', produktivitas: '15.5', produksiTon: '800', tren: '+5%', tahun: '2024', kecamatans: [{ nama: 'Wuluhan', luas: '1,000', pKotor: '900', pBersih: '850', produktivitas: '16.0', produksi: '450', tren: '+8%' }] },
-      // DATA 2023
-      { komoditi: 'Padi', bulan: 'Juli', luasTanam: '11,200', panenKotor: '10,500', panenBersih: '10,200', produktivitas: '68.0', produksiTon: '13,500', tren: '+8%', tahun: '2023', kecamatans: [{ nama: 'Ambulu', luas: '3,000', pKotor: '2,800', pBersih: '2,700', produktivitas: '65.0', produksi: '4,000', tren: '+5%' }] },
-      // DATA 2022
-      { komoditi: 'Jagung', bulan: 'Mei', luasTanam: '5,200', panenKotor: '5,000', panenBersih: '4,900', produktivitas: '58.5', produksiTon: '4,800', tren: '+5%', tahun: '2022', kecamatans: [{ nama: 'Kencong', luas: '900', pKotor: '850', pBersih: '800', produktivitas: '55.0', produksi: '900', tren: '+2%' }] },
-      // DATA 2021
-      { komoditi: 'Padi', bulan: 'Maret', luasTanam: '10,800', panenKotor: '10,000', panenBersih: '9,800', produktivitas: '66.5', produksiTon: '12,000', tren: '+4%', tahun: '2021', kecamatans: [{ nama: 'Gumukmas', luas: '2,500', pKotor: '2,400', pBersih: '2,300', produktivitas: '64.0', produksi: '3,200', tren: '+3%' }] },
-      // DATA 2020
-      { komoditi: 'Jagung', bulan: 'Januari', luasTanam: '4,800', panenKotor: '4,500', panenBersih: '4,400', produktivitas: '55.0', produksiTon: '4,200', tren: '+0%', tahun: '2020', kecamatans: [{ nama: 'Puger', luas: '800', pKotor: '750', pBersih: '700', produktivitas: '52.0', produksi: '800', tren: '+0%' }] },
-    ]
-  };
+  const allData = useMemo(() => ({
+  'Data Lahan Produksi': [
+    // DATA 2025
+    {
+      kecamatan: 'Kencong',
+      totalLuas: '5,000',
+      tren: '+90%',
+      tahun: '2025',
+      desa: [
+        {
+          nama: 'Paseban',
+          luas: '1,000',
+          tren: '+90%',
+          jenis: 'Sawah Irigasi',
+          status: 'Milik Sendiri',
+          air: 'Irigasi Teknis',
+          pemanfaatan: 'Lahan Aktif Ditanami',
+        },
+        {
+          nama: 'Cakru',
+          luas: '1,000',
+          tren: '+80%',
+          jenis: 'Sawah Irigasi',
+          status: 'Milik Sendiri',
+          air: 'Irigasi Teknis',
+          pemanfaatan: 'Lahan Aktif Ditanami',
+        },
+      ],
+    },
+
+    // DATA 2024
+    {
+      kecamatan: 'Kencong',
+      totalLuas: '4,200',
+      tren: '+15%',
+      tahun: '2024',
+      desa: [
+        {
+          nama: 'Paseban',
+          luas: '900',
+          tren: '+5%',
+          jenis: 'Sawah Irigasi',
+          status: 'Milik Sendiri',
+          air: 'Irigasi Teknis',
+          pemanfaatan: 'Lahan Aktif Ditanami',
+        },
+      ],
+    },
+  ],
+
+  'Data Produksi Panen': [
+    {
+      komoditi: 'Jagung',
+      bulan: 'Januari',
+      luasTanam: '6,246',
+      panenKotor: '6,200',
+      panenBersih: '6,100',
+      produktivitas: '65.5',
+      produksiTon: '6,246',
+      tren: '+35%',
+      tahun: '2025',
+      kecamatans: [
+        {
+          nama: 'Kencong',
+          luas: '1,246',
+          pKotor: '1,200',
+          pBersih: '1,150',
+          produktivitas: '62.0',
+          produksi: '1,200',
+          tren: '+35%',
+        },
+      ],
+    },
+  ],
+}), []); 
+  // // --- Data Source Lengkap (2020 - 2025) ---
+  // const allData = {
+  //   'Data Lahan Produksi': [
+  //     // DATA 2025
+  //     { kecamatan: 'Kencong', totalLuas: '5,000', tren: '+90%', tahun: '2025', desa: [{ nama: 'Paseban', luas: '1,000', tren: '+90%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }, { nama: 'Cakru', luas: '1,000', tren: '+80%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
+  //     { kecamatan: 'Gumukmas', totalLuas: '4,500', tren: '+10%', tahun: '2025', desa: [{ nama: 'Bagorejo', luas: '2,000', tren: '+5%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
+  //     // DATA 2024
+  //     { kecamatan: 'Kencong', totalLuas: '4,200', tren: '+15%', tahun: '2024', desa: [{ nama: 'Paseban', luas: '900', tren: '+5%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
+  //     { kecamatan: 'Puger', totalLuas: '3,800', tren: '+8%', tahun: '2024', desa: [{ nama: 'Grenden', luas: '1,800', tren: '+4%', jenis: 'Sawah Tadah Hujan', status: 'Sewa', air: 'Pompa', pemanfaatan: 'Lahan Aktif Ditanami' }] },
+  //     // DATA 2023
+  //     { kecamatan: 'Wuluhan', totalLuas: '4,100', tren: '+5%', tahun: '2023', desa: [{ nama: 'Dukuhdempit', luas: '1,500', tren: '+2%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
+  //     { kecamatan: 'Kencong', totalLuas: '3,900', tren: '+10%', tahun: '2023', desa: [{ nama: 'Kraton', luas: '1,200', tren: '+6%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
+  //     // DATA 2022
+  //     { kecamatan: 'Ambulu', totalLuas: '3,500', tren: '+3%', tahun: '2022', desa: [{ nama: 'Sumberejo', luas: '1,100', tren: '+1%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
+  //     // DATA 2021
+  //     { kecamatan: 'Gumukmas', totalLuas: '3,800', tren: '+2%', tahun: '2021', desa: [{ nama: 'Menampu', luas: '1,000', tren: '+1%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
+  //     // DATA 2020
+  //     { kecamatan: 'Puger', totalLuas: '3,000', tren: '+0%', tahun: '2020', desa: [{ nama: 'Puger Kulon', luas: '800', tren: '+0%', jenis: 'Sawah Tadah Hujan', status: 'Milik Sendiri', air: 'Pompa', pemanfaatan: 'Lahan Aktif Ditanami' }] },
+  //   ],
+  //   'Data Produksi Panen': [
+  //     // DATA 2025 — Pangan
+  //     { komoditi: 'Jagung', bulan: 'Januari', luasTanam: '6,246', panenKotor: '6,200', panenBersih: '6,100', produktivitas: '65.5', produksiTon: '6,246', tren: '+35%', tahun: '2025', kecamatans: [{ nama: 'Kencong', luas: '1,246', pKotor: '1,200', pBersih: '1,150', produktivitas: '62.0', produksi: '1,200', tren: '+35%' }] },
+  //     { komoditi: 'Padi', bulan: 'Februari', luasTanam: '12,500', panenKotor: '12,000', panenBersih: '11,800', produktivitas: '72.1', produksiTon: '15,000', tren: '+12%', tahun: '2025', kecamatans: [{ nama: 'Puger', luas: '4,500', pKotor: '4,200', pBersih: '4,100', produktivitas: '70.5', produksi: '6,000', tren: '+14%' }] },
+  //     { komoditi: 'Kedelai', bulan: 'Maret', luasTanam: '1,800', panenKotor: '1,700', panenBersih: '1,650', produktivitas: '14.2', produksiTon: '720', tren: '+6%', tahun: '2025', kecamatans: [{ nama: 'Kencong', luas: '600', pKotor: '580', pBersih: '550', produktivitas: '13.5', produksi: '240', tren: '+4%' }] },
+  //     // Hortikultura
+  //     { komoditi: 'Bawang Merah', bulan: 'April', luasTanam: '420', panenKotor: '400', panenBersih: '390', produktivitas: '8.2', produksiTon: '95', tren: '+3%', tahun: '2025', kecamatans: [{ nama: 'Wuluhan', luas: '200', pKotor: '190', pBersih: '185', produktivitas: '8.0', produksi: '42', tren: '+2%' }] },
+  //     { komoditi: 'Bawang Putih', bulan: 'Mei', luasTanam: '310', panenKotor: '295', panenBersih: '288', produktivitas: '7.5', produksiTon: '62', tren: '+2%', tahun: '2025', kecamatans: [{ nama: 'Ambulu', luas: '150', pKotor: '145', pBersih: '140', produktivitas: '7.2', produksi: '28', tren: '+1%' }] },
+  //     // Kebun
+  //     { komoditi: 'Kopi', bulan: 'Desember', luasTanam: '2,100', panenKotor: '2,000', panenBersih: '1,950', produktivitas: '4.2', produksiTon: '180', tren: '+4%', tahun: '2025', kecamatans: [{ nama: 'Gumukmas', luas: '900', pKotor: '860', pBersih: '840', produktivitas: '4.0', produksi: '78', tren: '+3%' }] },
+  //     { komoditi: 'Teh', bulan: 'Oktober', luasTanam: '1,400', panenKotor: '1,350', panenBersih: '1,320', produktivitas: '3.8', produksiTon: '120', tren: '+2%', tahun: '2025', kecamatans: [{ nama: 'Puger', luas: '600', pKotor: '580', pBersih: '570', produktivitas: '3.6', produksi: '52', tren: '+1%' }] },
+  //     // DATA 2024
+  //     { komoditi: 'Jagung', bulan: 'September', luasTanam: '5,800', panenKotor: '5,500', panenBersih: '5,400', produktivitas: '60.2', produksiTon: '5,200', tren: '+20%', tahun: '2024', kecamatans: [{ nama: 'Gumukmas', luas: '1,000', pKotor: '950', pBersih: '900', produktivitas: '58.0', produksi: '1,000', tren: '+15%' }] },
+  //     { komoditi: 'Kedelai', bulan: 'Agustus', luasTanam: '2,000', panenKotor: '1,800', panenBersih: '1,750', produktivitas: '15.5', produksiTon: '800', tren: '+5%', tahun: '2024', kecamatans: [{ nama: 'Wuluhan', luas: '1,000', pKotor: '900', pBersih: '850', produktivitas: '16.0', produksi: '450', tren: '+8%' }] },
+  //     // DATA 2023
+  //     { komoditi: 'Padi', bulan: 'Juli', luasTanam: '11,200', panenKotor: '10,500', panenBersih: '10,200', produktivitas: '68.0', produksiTon: '13,500', tren: '+8%', tahun: '2023', kecamatans: [{ nama: 'Ambulu', luas: '3,000', pKotor: '2,800', pBersih: '2,700', produktivitas: '65.0', produksi: '4,000', tren: '+5%' }] },
+  //     // DATA 2022
+  //     { komoditi: 'Jagung', bulan: 'Mei', luasTanam: '5,200', panenKotor: '5,000', panenBersih: '4,900', produktivitas: '58.5', produksiTon: '4,800', tren: '+5%', tahun: '2022', kecamatans: [{ nama: 'Kencong', luas: '900', pKotor: '850', pBersih: '800', produktivitas: '55.0', produksi: '900', tren: '+2%' }] },
+  //     // DATA 2021
+  //     { komoditi: 'Padi', bulan: 'Maret', luasTanam: '10,800', panenKotor: '10,000', panenBersih: '9,800', produktivitas: '66.5', produksiTon: '12,000', tren: '+4%', tahun: '2021', kecamatans: [{ nama: 'Gumukmas', luas: '2,500', pKotor: '2,400', pBersih: '2,300', produktivitas: '64.0', produksi: '3,200', tren: '+3%' }] },
+  //     // DATA 2020
+  //     { komoditi: 'Jagung', bulan: 'Januari', luasTanam: '4,800', panenKotor: '4,500', panenBersih: '4,400', produktivitas: '55.0', produksiTon: '4,200', tren: '+0%', tahun: '2020', kecamatans: [{ nama: 'Puger', luas: '800', pKotor: '750', pBersih: '700', produktivitas: '52.0', produksi: '800', tren: '+0%' }] },
+  //   ] 
+  // } ;
 
   const latestYearLahan = getLatestYearFromRecords(allData['Data Lahan Produksi']);
   const latestYearPanen = getLatestYearFromRecords(allData['Data Produksi Panen']);
 
-  const effectiveYear =
-    selectedYear ||
-    (activeTab === 'Data Lahan Produksi' ? latestYearLahan : latestYearPanen);
-
-  // --- Logic Filter ---
   const filteredData = useMemo(() => {
-    if (!effectiveYear) return [];
+    const year =
+      selectedYear ||
+      (activeTab === 'Data Lahan Produksi'
+        ? latestYearLahan
+        : latestYearPanen);
+
+    if (!year) return [];
 
     if (activeTab === 'Data Lahan Produksi') {
-      return allData[activeTab].filter((item) => {
-        const matchYear = item.tahun === effectiveYear;
-        const matchKec =
-          selectedKecamatan === 'Semua Kecamatan' ||
-          item.kecamatan === selectedKecamatan;
-        return matchYear && matchKec;
-      }).sort((a, b) => a.kecamatan.localeCompare(b.kecamatan, 'id'));
+      return allData[activeTab]
+        .filter((item) => {
+          const matchYear = item.tahun === year;
+          const matchKec =
+            selectedKecamatan === 'Semua Kecamatan' ||
+            item.kecamatan === selectedKecamatan;
+          return matchYear && matchKec;
+        })
+        .sort((a, b) => a.kecamatan.localeCompare(b.kecamatan, 'id'));
     }
 
-    return allData['Data Produksi Panen'].filter((item) => {
-      if (jenisKomoditi !== SEMUA_JENIS) {
-        const allowed = KOMODITI_BY_JENIS[jenisKomoditi] || [];
-        if (!allowed.includes(item.komoditi)) return false;
-      }
-      if (item.tahun !== effectiveYear) return false;
-      if (selectedMonth && item.bulan && item.bulan !== selectedMonth) return false;
-      if (
-        komoditiSearch.trim() &&
-        !item.komoditi.toLowerCase().includes(komoditiSearch.trim().toLowerCase())
-      ) {
-        return false;
-      }
-      if (selectedKecamatan === 'Semua Kecamatan') return true;
-      return (item.kecamatans || []).some((k) => k.nama === selectedKecamatan);
-    }).sort((a, b) => a.komoditi.localeCompare(b.komoditi, 'id'));
+    return allData['Data Produksi Panen']
+      .filter((item) => {
+        if (jenisKomoditi !== SEMUA_JENIS) {
+          const allowed = KOMODITI_BY_JENIS[jenisKomoditi] || [];
+          if (!allowed.includes(item.komoditi)) return false;
+        }
+        if (item.tahun !== year) return false;
+        if (selectedMonth && item.bulan && item.bulan !== selectedMonth) return false;
+        if (
+          komoditiSearch.trim() &&
+          !item.komoditi.toLowerCase().includes(komoditiSearch.trim().toLowerCase())
+        ) {
+          return false;
+        }
+        if (selectedKecamatan === 'Semua Kecamatan') return true;
+        return (item.kecamatans || []).some((k) => k.nama === selectedKecamatan);
+      })
+      .sort((a, b) => a.komoditi.localeCompare(b.komoditi, 'id'));
   }, [
     activeTab,
-    effectiveYear,
+    selectedYear,
     selectedMonth,
     jenisKomoditi,
     komoditiSearch,
     selectedKecamatan,
-  ]);
+    latestYearLahan,
+    latestYearPanen,
+    allData,
+]);
+  // // --- Logic Filter ---
+  // const filteredData = useMemo(() => {
+  //   if (!effectiveYear) return [];
+
+  //   if (activeTab === 'Data Lahan Produksi') {
+  //     return allData[activeTab].filter((item) => {
+  //       const matchYear = item.tahun === effectiveYear;
+  //       const matchKec =
+  //         selectedKecamatan === 'Semua Kecamatan' ||
+  //         item.kecamatan === selectedKecamatan;
+  //       return matchYear && matchKec;
+  //     }).sort((a, b) => a.kecamatan.localeCompare(b.kecamatan, 'id'));
+  //   }
+
+  //   return allData['Data Produksi Panen'].filter((item) => {
+  //     if (jenisKomoditi !== SEMUA_JENIS) {
+  //       const allowed = KOMODITI_BY_JENIS[jenisKomoditi] || [];
+  //       if (!allowed.includes(item.komoditi)) return false;
+  //     }
+  //     if (item.tahun !== effectiveYear) return false;
+  //     if (selectedMonth && item.bulan && item.bulan !== selectedMonth) return false;
+  //     if (
+  //       komoditiSearch.trim() &&
+  //       !item.komoditi.toLowerCase().includes(komoditiSearch.trim().toLowerCase())
+  //     ) {
+  //       return false;
+  //     }
+  //     if (selectedKecamatan === 'Semua Kecamatan') return true;
+  //     return (item.kecamatans || []).some((k) => k.nama === selectedKecamatan);
+  //   }).sort((a, b) => a.komoditi.localeCompare(b.komoditi, 'id'));
+  // }, [
+  //   activeTab,
+  //   selectedYear,
+  //   selectedMonth,
+  //   jenisKomoditi,
+  //   komoditiSearch,
+  //   selectedKecamatan,
+  // ]);
 
   // --- Handlers ---
   const toggleExpand = (id) => {

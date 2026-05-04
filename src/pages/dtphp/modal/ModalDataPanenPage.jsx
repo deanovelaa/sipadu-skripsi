@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const ModalDataPanen = () => {
-    const navigate = useNavigate();
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
     const [selectedKomoditi, setSelectedKomoditi] = useState('Semua Komoditi');
     const [selectedBulan, setSelectedBulan] = useState('Semua Bulan');
     const [selectedYear, setSelectedYear] = useState('2020');
@@ -15,13 +12,14 @@ const ModalDataPanen = () => {
     const [isLocationOpen, setIsLocationOpen] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
     const [expandedDesa, setExpandedDesa] = useState([]);
-    const [showPercentage, setShowPercentage] = useState(true);
-
-    const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [isFilterApplied, setIsFilterApplied] = useState(false);
+    const [showPercentage] = useState(true);
+    // eslint-disable-next-line no-unused-vars
     const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
-    const [isConfirmVerifikasiOpen, setIsConfirmVerifikasiOpen] = useState(false);
-    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-
+    // eslint-disable-next-line no-unused-vars
+    const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
+    
     const komoditiDropdownRef = useRef(null);
     const bulanDropdownRef = useRef(null);
     const yearDropdownRef = useRef(null);
@@ -47,7 +45,7 @@ const ModalDataPanen = () => {
     const locationOptions = ['Semua Kecamatan','Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
     // STRUKTUR DATA: Komoditi sebagai parent, kecamatan sebagai child
-    const [rows, setRows] = useState([
+    const [rows] = useState([
         {
             id: 1,
             komoditi: 'Padi',
@@ -222,18 +220,7 @@ const ModalDataPanen = () => {
         );
 
     // LOGIKA CHECKBOX
-    const allChildIds = filteredRows.flatMap(row => row.children.map(c => c.id));
-    const isAllChecked = allChildIds.length > 0 && selectedRows.length === allChildIds.length;
-    const isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
-
-    const toggleAll = () => {
-        if (isAllChecked) {
-            setSelectedRows([]);
-        } else {
-            setSelectedRows(allChildIds);
-        }
-    };
-
+    // eslint-disable-next-line no-unused-vars
     const toggleParent = (row) => {
         const childIds = row.children.map(c => c.id);
         const isAllSelected = childIds.every(id => selectedRows.includes(id));
@@ -247,6 +234,7 @@ const ModalDataPanen = () => {
         }
     };
 
+    // eslint-disable-next-line no-unused-vars
     const toggleRow = (childId) => {
         setSelectedRows((prev) =>
             prev.includes(childId) ? prev.filter((id) => id !== childId) : [...prev, childId]
@@ -259,6 +247,7 @@ const ModalDataPanen = () => {
         );
     };
 
+    // eslint-disable-next-line no-unused-vars
     const handleLaporkan = () => {
         if (selectedRows.length === 0) {
             setIsWarningModalOpen(true);
@@ -277,6 +266,7 @@ const ModalDataPanen = () => {
         });
         return Array.from(names);
     };
+    // eslint-disable-next-line no-unused-vars
     const firstSelectedKomoditi = getSelectedKomoditiNames()[0] || '-';
 
     const renderTrendBadge = (clipId, label = '+90%', isPositive = true) => (
@@ -544,6 +534,7 @@ const ModalDataPanen = () => {
                             {filteredRows.map((row) => {
                                 const childIds = row.children.map(c => c.id);
                                 const isAllParentChecked = childIds.length > 0 && childIds.every(id => selectedRows.includes(id));
+                                // eslint-disable-next-line no-unused-vars
                                 const isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
 
                                 return (

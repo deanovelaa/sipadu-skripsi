@@ -237,9 +237,6 @@ const BuatDataBaruPanenPage = () => {
     return () => document.removeEventListener('mousedown', handleClickOutsideDropdowns);
   }, []);
 
-  useEffect(() => {
-    setExpandedDesa([]);
-  }, [selectedYear]);
 
   const currentDesaList = desaDataByYear[selectedYear] || [];
 

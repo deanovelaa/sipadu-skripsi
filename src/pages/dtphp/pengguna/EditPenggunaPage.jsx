@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 const EditPenggunaPage = () => {
+    const [_isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
     const navigate = useNavigate();
 
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -15,7 +15,17 @@ const EditPenggunaPage = () => {
         noHp: '085956767897',
         peran: 'Kecamatan Sumbersari',
         password: '12345678'
+        
     });
+
+    const _handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+        }));
+    };
+    
 
     return (
         <div className="w-full min-h-screen bg-[#F8FAFC] pb-10">
@@ -149,7 +159,7 @@ const EditPenggunaPage = () => {
                         </button>
                         <button
                             onClick={() => {
-                                setIsConfirmUploadOpen(false);
+                                setIsConfirmUploadOpen(true);
                                 setIsSuccessModalOpen(true);
                             }}
                             className="px-8 py-2.5 bg-[#16A34A] text-white text-[14px] font-normal hover:bg-[#15803D] transition-colors flex items-center gap-2">

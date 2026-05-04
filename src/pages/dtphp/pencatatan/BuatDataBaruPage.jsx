@@ -2,21 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const BuatDataBaruPage = () => {
-  const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [isJudulOpen, setIsJudulOpen] = useState(false);
-  const [selectedJudul, setSelectedJudul] = useState('');
-  const [judulSearch, setJudulSearch] = useState('');
+  const navigate = useNavigate();
   const judulDropdownRef = useRef(null);
-  const judulSearchRef = useRef(null);
-
-  const judulOptions = [
-    'Data Lahan Panen',
-    'Data Produksi Panen',
-  ];
-
-  const filteredJudul = judulOptions.filter(option =>
-    option.toLowerCase().includes(judulSearch.toLowerCase())
-  );
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {

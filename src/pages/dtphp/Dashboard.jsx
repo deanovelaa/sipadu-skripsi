@@ -90,8 +90,6 @@ const DashboardDtphpPage = () => {
   const musimanDropdownRef = useRef(null);
   const [tahun, setTahun] = useState("2025");
 
-  const [isPadiOpen, setIsPadiOpen] = useState(false);
-  const [selectedPadi, setSelectedPadi] = useState("Padi");
   const padiDropdownRef = useRef(null);
 
   const [isPadiTableOpen, setIsPadiTableOpen] = useState(false);
@@ -181,9 +179,7 @@ const DashboardDtphpPage = () => {
       if (
         padiDropdownRef.current &&
         !padiDropdownRef.current.contains(event.target)
-      ) {
-        setIsPadiOpen(false);
-      }
+      )
       if (
         padiTableDropdownRef.current &&
         !padiTableDropdownRef.current.contains(event.target)
@@ -315,7 +311,7 @@ const DashboardDtphpPage = () => {
       type: "bar",
       height: 380, // Sesuaikan agar pas dengan container kiri
       backgroundColor: "transparent",
-      marginRight: 50, // Memberi ruang untuk label angka di kanan
+      marginRight: 30, // Memberi ruang untuk label angka di kanan
     },
     title: { text: null },
     credits: { enabled: false },
@@ -374,7 +370,7 @@ const DashboardDtphpPage = () => {
       {
         // Gunakan data sesuai dengan panjang bar di gambar
         data: [
-          { y: 95, color: "#064E3B", label: "12K" }, // Sumbersari (Hijau Sangat Tua)
+          { y: 89, color: "#064E3B", label: "12K" }, // Sumbersari (Hijau Sangat Tua)
           { y: 85, color: "#064E3B", label: "10K" }, // Patrang
           { y: 70, color: "#14532D", label: "20%" }, // Kaliwates
           { y: 65, color: "#15803D", label: "20%" }, // Rambipuji
@@ -454,14 +450,6 @@ const DashboardDtphpPage = () => {
     },
   });
 
-  const petaPersebaranData = [
-    {
-      value: "12,120,000",
-      change: "+28.5%",
-      changeType: "positive",
-    },
-  ];
-
   const tableData = [
     {
       kecamatan: "Kencong",
@@ -504,84 +492,6 @@ const DashboardDtphpPage = () => {
       produksi: "24,133",
     },
   ];
-
-  // Konfigurasi Highcharts untuk Grafik Komoditas
-  const getGrafikKomoditasOptions2 = (grafik) => {
-    const categories = grafik.items.map((item) => item.name);
-    const musimLaluData = grafik.items.map((item) => item.musimLalu);
-    const musimIniData = grafik.items.map((item) => item.musimIni);
-
-    return {
-      chart: {
-        type: "column",
-        height: 250,
-        backgroundColor: "transparent",
-        spacing: [10, 10, 10, 10],
-      },
-      title: {
-        text: null,
-      },
-      credits: {
-        enabled: false,
-      },
-      legend: {
-        enabled: false,
-      },
-      xAxis: {
-        categories: categories,
-        labels: {
-          style: {
-            fontSize: "12px",
-            color: "#6B7280",
-            fontFamily: "Mona Sans, Roboto, sans-serif",
-          },
-        },
-        lineWidth: 0,
-        tickWidth: 0,
-      },
-      yAxis: {
-        title: {
-          text: null,
-        },
-        min: 0,
-        max: 120,
-        tickInterval: 40,
-        labels: {
-          enabled: false,
-        },
-        gridLineWidth: 0,
-      },
-      plotOptions: {
-        column: {
-          grouping: false,
-          pointPadding: 0.2,
-          groupPadding: 0.3,
-          borderRadius: 4,
-          borderWidth: 0,
-          states: {
-            hover: {
-              enabled: false,
-            },
-          },
-        },
-      },
-      series: [
-        {
-          name: "2024",
-          data: musimLaluData,
-          color: "#E5E7EB",
-        },
-        {
-          name: "2025",
-          data: musimIniData,
-          color: "#16A34A",
-        },
-      ],
-      tooltip: {
-        enabled: false,
-      },
-    };
-  };
 
   // Konfigurasi Chart Utama (Harga Komoditas)
   const hargaKomoditasChartOptions = {
@@ -710,141 +620,6 @@ const DashboardDtphpPage = () => {
       },
     ],
   };
-
-  // Konfigurasi Volume Penjualan (Bar Chart)
-  const volumePenjualanChartOptions = {
-    chart: {
-      type: "column",
-      height: 120,
-      backgroundColor: "transparent",
-      margin: [10, 0, 25, 0],
-    },
-    title: { text: null },
-    credits: { enabled: false },
-    legend: { enabled: false },
-    xAxis: {
-      categories: [
-        "12 AM",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "8 AM",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "4 PM",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "11 PM",
-      ],
-      lineWidth: 0,
-      tickWidth: 0,
-      labels: {
-        style: { color: "#9CA3AF", fontSize: "10px", fontWeight: "500" },
-      },
-    },
-    yAxis: {
-      visible: false, // Sesuai gambar, yAxis tidak ditampilkan
-      gridLineWidth: 0,
-    },
-    plotOptions: {
-      column: {
-        borderWidth: 0,
-        borderRadius: 1, // Batang sedikit melengkung di ujung
-        pointPadding: 0.1,
-        groupPadding: 0.2,
-      },
-    },
-    series: [
-      {
-        name: "Hari Ini",
-        color: "#16A34A",
-        data: [
-          60, 50, 60, 45, 55, 40, 58, 62, 75, 55, 78, 48, 52, 65, 42, 68, 58,
-          45, 55, 38, 62, 55, 48, 52,
-        ],
-      },
-      {
-        name: "Kemarin",
-        color: "#3B82F6",
-        data: [
-          55, 45, 38, 40, 32, 25, 50, 68, 60, 52, 58, 45, 35, 48, 55, 62, 50,
-          65, 52, 58, 60, 55, 52, 60,
-        ],
-      },
-    ],
-    tooltip: { enabled: false }, // Tooltip biasanya tidak terlihat di dashboard overview statis
-  };
-
-  // Konfigurasi Pola Permintaan (Line Chart Hijau)
-  const polaPermintaanChartOptions = {
-    chart: {
-      type: 'line',
-      height: 160,
-      backgroundColor: 'transparent',
-      margin: [10, 10, 30, 10], // Atur margin agar label jam tidak terpotong
-    },
-    title: { text: null },
-    credits: { enabled: false },
-    legend: { enabled: false },
-    xAxis: {
-      categories: ['12 AM', '', '', '', '', '', '', '', '8 AM', '', '', '', '', '', '', '', '4 PM', '', '', '', '', '', '', '11 PM'],
-      lineWidth: 0.5,
-      lineColor: '#e2e8f0',
-      tickWidth: 0,
-      labels: {
-        style: { color: '#64748b', fontSize: '10px', fontWeight: '600' },
-      },
-      gridLineWidth: 1,
-      gridLineDashStyle: 'Dash',
-      gridLineColor: '#f1f5f9',
-    },
-    yAxis: {
-      title: { text: null },
-      min: 0,
-      max: 500,
-      tickInterval: 250,
-      gridLineColor: '#f1f5f9',
-      labels: {
-        style: { color: '#64748b', fontSize: '10px', fontWeight: '500' },
-      }
-    },
-    plotOptions: {
-      line: {
-        color: '#22c55e', // Warna hijau garis tajam
-        lineWidth: 1.5,
-        marker: {
-          enabled: false,
-        },
-        states: {
-          hover: {
-            enabled: false
-          }
-        }
-      }
-    },
-    series: [
-      {
-        name: 'Permintaan',
-        data: [20, 40, 80, 150, 100, 40, 80, 180, 120, 80, 50, 100, 200, 380, 250, 150, 40, 40, 40, 80, 150, 80, 40, 10],
-      }
-    ],
-    tooltip: { enabled: false }
-  };
-
-
 
   return (
     <div className="w-full px-[44px] py-10 space-y-10 bg-[#F9FAFB] min-h-screen">
@@ -1142,7 +917,7 @@ const DashboardDtphpPage = () => {
                           setTahun(itemTahun);
                           setIsTahunFilterOpen(false);
                         }}
-                        className={`w-full text-left px-5 py-2 text-sm transition-colors ${tahun === itemTahun
+                        className={`w-full text-left px-9 py-2 text-sm transition-colors ${tahun === itemTahun
                           ? "bg-gray-50 text-gray-900 font-medium"
                           : "text-gray-600 hover:bg-gray-50"
                           }`}
@@ -1639,7 +1414,6 @@ const DashboardDtphpPage = () => {
             </div>
 
             <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between text-[12px] font-medium text-green-500">
-              <button className="underline">Ubah Tahun</button>
               <button onClick={() => setIsModalDataLahanOpen(true)} className="underline">Lihat Data</button>
             </div>
           </div>
@@ -1700,7 +1474,6 @@ const DashboardDtphpPage = () => {
             </div>
 
             <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between text-[12px] font-medium text-green-500">
-              <button className="underline">Ubah Tahun</button>
               <button onClick={() => setIsModalDataLahanOpen(true)} className="underline">Lihat Data</button>
             </div>
           </div>

@@ -1,14 +1,17 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const ModalDataLahanPage = () => {
   // --- States ---
-  const [activeTab, setActiveTab] = useState('Data Lahan Produksi');
+  const [activeTab] = useState('Data Lahan Produksi');
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedKecamatan, setSelectedKecamatan] = useState('Semua Kecamatan');
   const [expandedItems, setExpandedItems] = useState(['Kencong', 'Jagung', 'Padi']);
   const [isSearchTriggered, setIsSearchTriggered] = useState(true);
   const [komoditiSearch, setKomoditiSearch] = useState('');
+  const navigate = useNavigate();
 
   // --- Data Source Lengkap (2020 - 2025) ---
   const allData = {
@@ -61,8 +64,8 @@ const ModalDataLahanPage = () => {
         : item.komoditi?.toLowerCase().includes(komoditiSearch.trim().toLowerCase());
       return matchYear && matchKec && matchKomoditi;
     });
-  }, [activeTab, selectedYear, selectedKecamatan, isSearchTriggered, komoditiSearch]);
-
+  }, );
+[activeTab, selectedYear, selectedKecamatan, isSearchTriggered, komoditiSearch]
   // --- Handlers ---
   const toggleExpand = (id) => {
     setExpandedItems(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]);
