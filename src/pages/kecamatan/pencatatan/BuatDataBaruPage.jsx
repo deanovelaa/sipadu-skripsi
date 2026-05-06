@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom';
 
 const BuatDataBaruPage = () => {
   const navigate = useNavigate();
-  const [isJudulOpen, setIsJudulOpen] = useState(false);
-  const [selectedJudul, setSelectedJudul] = useState('');
-  const [judulSearch, setJudulSearch] = useState('');
+  const [_isJudulOpen, setIsJudulOpen] = useState(false);
+  const [judulSearch, _setJudulSearch] = useState('');
+  
   const judulDropdownRef = useRef(null);
-  const judulSearchRef = useRef(null);
+  const _judulSearchRef = useRef(null);
 
   const judulOptions = [
     'Data Lahan Panen',
     'Data Produksi Panen',
   ];
 
-  const filteredJudul = judulOptions.filter(option =>
+  const _filteredJudul = judulOptions.filter(option =>
     option.toLowerCase().includes(judulSearch.toLowerCase())
   );
 

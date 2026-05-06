@@ -16,7 +16,7 @@ const DetailDataPanenPage = () => {
     const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
     const [expandedDesa, setExpandedDesa] = useState([]);
     const [showPercentage, setShowPercentage] = useState(true);
-    const [_isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
+    const [IsCOnfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
 
     const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
     const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
@@ -48,7 +48,7 @@ const DetailDataPanenPage = () => {
     const locationOptions = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
     // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
-    const rows = useState([
+    const [rows, _setRows] = useState([
         {
             id: 1,
             desa: 'Paseban',
@@ -390,7 +390,7 @@ const DetailDataPanenPage = () => {
         }
     };
 
-    const toggleRow = (childId) => {
+    const _toggleRow = (childId) => {
         setSelectedRows((prev) =>
             prev.includes(childId) ? prev.filter((id) => id !== childId) : [...prev, childId]
         );
@@ -786,17 +786,17 @@ const DetailDataPanenPage = () => {
                                         {expandedDesa.includes(row.desa) && row.children.map((child) => (
                                             <tr key={child.id} className="bg-white hover:bg-gray-50 transition-colors">
                                                 <td className="py-4 px-4 text-center align-middle border-t border-transparent">
-                                                    <input
+                                                    {/* <input
                                                         type="checkbox"
                                                         className="w-[18px] h-[18px] rounded border-gray-300 cursor-pointer"
                                                         checked={selectedRows.includes(child.id)}
                                                         onChange={() => toggleRow(child.id)}
-                                                    />
+                                                    /> */}
                                                 </td>
                                                 <td className="py-4 px-2"></td>
                                                 <td className="py-4 px-2 align-middle">
                                                     <div className="flex items-center">
-                                                        <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
+                                                        <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] bg-[#F2F4F8] min-w-[64px] rounded-full">
                                                             {child.komoditi}
                                                         </span>
 

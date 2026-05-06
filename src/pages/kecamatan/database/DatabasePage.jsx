@@ -37,7 +37,7 @@ const DatabasePage = () => {
   const [expandedItems, setExpandedItems] = useState(['Kencong', 'Jagung', 'Padi']);
 
   // --- Data Source Lengkap (2020 - 2025) ---
-  const allData = {
+  const allData = useMemo(() => ({
     'Data Lahan Produksi': [
       // DATA 2025
       { kecamatan: 'Kencong', totalLuas: '5,000', tren: '+90%', tahun: '2025', desa: [{ nama: 'Paseban', luas: '1,000', tren: '+90%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }, { nama: 'Cakru', luas: '1,000', tren: '+80%', jenis: 'Sawah Irigasi', status: 'Milik Sendiri', air: 'Irigasi Teknis', pemanfaatan: 'Lahan Aktif Ditanami' }] },
@@ -78,52 +78,60 @@ const DatabasePage = () => {
       // DATA 2020
       { komoditi: 'Jagung', bulan: 'Januari', luasTanam: '4,800', panenKotor: '4,500', panenBersih: '4,400', produktivitas: '55.0', produksiTon: '4,200', tren: '+0%', tahun: '2020', kecamatans: [{ nama: 'Puger', luas: '800', pKotor: '750', pBersih: '700', produktivitas: '52.0', produksi: '800', tren: '+0%' }] },
     ]
-  };
+  }), []); 
 
   const latestYearLahan = getLatestYearFromRecords(allData['Data Lahan Produksi']);
   const latestYearPanen = getLatestYearFromRecords(allData['Data Produksi Panen']);
 
-  const effectiveYear =
-    selectedYear ||
-    (activeTab === 'Data Lahan Produksi' ? latestYearLahan : latestYearPanen);
-
-  // --- Logic Filter ---
   const filteredData = useMemo(() => {
-    if (!effectiveYear) return [];
-
-    if (activeTab === 'Data Lahan Produksi') {
-      return allData[activeTab].filter((item) => {
-        const matchYear = item.tahun === effectiveYear;
-        const matchKec =
-          selectedKecamatan === 'Semua Kecamatan' ||
-          item.kecamatan === selectedKecamatan;
-        return matchYear && matchKec;
-      }).sort((a, b) => a.kecamatan.localeCompare(b.kecamatan, 'id'));
-    }
-
-    return allData['Data Produksi Panen'].filter((item) => {
-      if (jenisKomoditi !== SEMUA_JENIS) {
-        const allowed = KOMODITI_BY_JENIS[jenisKomoditi] || [];
-        if (!allowed.includes(item.komoditi)) return false;
+      const year =
+        selectedYear ||
+        (activeTab === 'Data Lahan Produksi'
+          ? latestYearLahan
+          : latestYearPanen);
+  
+      if (!year) return [];
+  
+      if (activeTab === 'Data Lahan Produksi') {
+        return allData[activeTab]
+          .filter((item) => {
+            const matchYear = item.tahun === year;
+            const matchKec =
+              selectedKecamatan === 'Semua Kecamatan' ||
+              item.kecamatan === selectedKecamatan;
+            return matchYear && matchKec;
+          })
+          .sort((a, b) => a.kecamatan.localeCompare(b.kecamatan, 'id'));
       }
-      if (item.tahun !== effectiveYear) return false;
-      if (selectedMonth && item.bulan && item.bulan !== selectedMonth) return false;
-      if (
-        komoditiSearch.trim() &&
-        !item.komoditi.toLowerCase().includes(komoditiSearch.trim().toLowerCase())
-      ) {
-        return false;
-      }
-      if (selectedKecamatan === 'Semua Kecamatan') return true;
-      return (item.kecamatans || []).some((k) => k.nama === selectedKecamatan);
-    }).sort((a, b) => a.komoditi.localeCompare(b.komoditi, 'id'));
-  }, [
-    activeTab,
-    effectiveYear,
-    selectedMonth,
-    jenisKomoditi,
-    komoditiSearch,
-    selectedKecamatan,
+  
+      return allData['Data Produksi Panen']
+        .filter((item) => {
+          if (jenisKomoditi !== SEMUA_JENIS) {
+            const allowed = KOMODITI_BY_JENIS[jenisKomoditi] || [];
+            if (!allowed.includes(item.komoditi)) return false;
+          }
+          if (item.tahun !== year) return false;
+          if (selectedMonth && item.bulan && item.bulan !== selectedMonth) return false;
+          if (
+            komoditiSearch.trim() &&
+            !item.komoditi.toLowerCase().includes(komoditiSearch.trim().toLowerCase())
+          ) {
+            return false;
+          }
+          if (selectedKecamatan === 'Semua Kecamatan') return true;
+          return (item.kecamatans || []).some((k) => k.nama === selectedKecamatan);
+        })
+        .sort((a, b) => a.komoditi.localeCompare(b.komoditi, 'id'));
+    }, [
+      activeTab,
+      selectedYear,
+      selectedMonth,
+      jenisKomoditi,
+      komoditiSearch,
+      selectedKecamatan,
+      latestYearLahan,
+      latestYearPanen,
+      allData,
   ]);
 
   // --- Handlers ---

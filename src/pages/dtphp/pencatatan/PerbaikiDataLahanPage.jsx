@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const PerbaikiDataLahanPage = () => {
+const DetailDataLahanPage = () => {
   const navigate = useNavigate();
-  const [_isFilterApplied, setIsFilterApplied] = useState(false);
   const [selectedYear, setSelectedYear] = useState('2020');
   const [selectedLocation, setSelectedLocation] = useState('Kencong');
   const [desaSearch, setDesaSearch] = useState('');
@@ -12,6 +11,7 @@ const PerbaikiDataLahanPage = () => {
   const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
   const [expandedDesa, setExpandedDesa] = useState([]);
   const [showPercentage, setShowPercentage] = useState(true);
+  const [_isFilterApplied, setIsFilterApplied] = useState(false);
   const [_isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
 
   const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
@@ -22,11 +22,17 @@ const PerbaikiDataLahanPage = () => {
   const yearDropdownRef = useRef(null);
   const locationDropdownRef = useRef(null);
 
+  const jenisLahanOptions = ['Sawah Irigasi', 'Sawah Tadah Hujan', 'Tegalan', 'Kebun'];
+  const statusKepemilikanOptions = ['Milik Sendiri', 'Sewa', 'Bagi Hasil', 'Lainnya'];
+  const ketersediaanAirOptions = ['Irigasi Teknis', 'Irigasi Semi Teknis', 'Tadah Hujan', 'Lainnya'];
+  const statusPemanfaatanOptions = ['Aktif Ditanami', 'Tidak Aktif', 'Alih Fungsi', 'Rencana Pengembangan'];
+
+
   const years = ['2020', '2021', '2022', '2023', '2024', '2025'];
   const locations = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
   // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
-  const rows = useState([
+  const [rows, setRows] = useState([
     {
       id: 1,
       desa: 'Paseban',
@@ -441,6 +447,27 @@ const PerbaikiDataLahanPage = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleEditChild = (rowId, childId, field, value) => {
+  setRows((prevRows) =>
+    prevRows.map((row) => {
+      if (row.id !== rowId) return row;
+
+      return {
+        ...row,
+        children: row.children.map((child) =>
+          child.id === childId
+            ? {
+                ...child,
+                [field]: field === 'luasLahan' ? Number(value) : value,
+              }
+            : child
+        ),
+      };
+    })
+  );
+  };
+
+
   return (
     <div className="w-full min-h-screen bg-[#F8FAFC] font-mona-sans">
       <div className="bg-[#F8FAFC] px-8 py-6">
@@ -643,34 +670,71 @@ const PerbaikiDataLahanPage = () => {
                         <td className="py-4 px-2"></td>
                         <td className="py-4 px-2 align-middle">
                           <div className="flex items-center">
-                            <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                              {child.luasLahan.toLocaleString('id-ID')}
-                            </span>
+                            <input
+                              type="text"
+                              value={child.luasLahan}
+                              onChange={(e) =>
+                                handleEditChild(row.id, child.id, 'luasLahan', e.target.value)
+                              }
+                              className="inline-flex items-center justify-center px-1 py-1 w-[38px] text-[14px] text-[#111827] min-w-[64px] rounded-full bg-transparent outline-none text-center"
+                            />
                             {showPercentage && (() => {
                               const trend = getChildTrend(child.id, selectedYear);
                               return renderTrendBadge(`trend_child_${child.id}_${selectedYear}`, trend.label, trend.isPositive);
                             })()}
-                          </div>
+                          </div>                          
                         </td>
                         <td className="py-4 px-2 align-middle">
-                          <span className="w-fit flex items-center justify-center rounded-full px-1 border border-gray-200  bg-[#F2F4F8] text-[#121619] hover:bg-gray-200 transition-colors text-[12px] font-normal">
-                            {child.jenisLahan}
-                          </span>
+                          <select
+                            value={child.jenisLahan}
+                            onChange={(e) =>
+                              handleEditChild(row.id, child.id, 'jenisLahan', e.target.value)
+                            }
+                            className="w-full bg-[#F2F4F8] border border-gray-200 rounded-full px-2 py-1 text-[12px]"
+                          >
+                            {jenisLahanOptions.map((item, index) => (
+                              <option key={index} value={item}>{item}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="py-4 px-2 align-middle">
-                          <span className="w-fit flex items-center justify-center rounded-full px-1 border border-gray-200  bg-[#F2F4F8] text-[#121619] hover:bg-gray-200 transition-colors text-[12px] font-normal">
-                            {child.statusKepemilikan}
-                          </span>
+                          <select
+                            value={child.statusKepemilikan}
+                            onChange={(e) =>
+                              handleEditChild(row.id, child.id, 'statusKepemilikan', e.target.value)
+                            }
+                            className="w-full bg-[#F2F4F8] border border-gray-200 rounded-full px-2 py-1 text-[12px]"
+                          >
+                            {statusKepemilikanOptions.map((item, index) => (
+                              <option key={index} value={item}>{item}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="py-4 px-2 align-middle">
-                          <span className="w-fit flex items-center justify-center rounded-full px-1 border border-gray-200  bg-[#F2F4F8] text-[#121619] hover:bg-gray-200 transition-colors text-[12px] font-normal">
-                            {child.ketersediaanAir}
-                          </span>
+                          <select
+                            value={child.ketersediaanAir}
+                            onChange={(e) =>
+                              handleEditChild(row.id, child.id, 'ketersediaanAir', e.target.value)
+                            }
+                            className="w-full bg-[#F2F4F8] border border-gray-200 rounded-full px-2 py-1 text-[12px]"
+                          >
+                            {ketersediaanAirOptions.map((item, index) => (
+                              <option key={index} value={item}>{item}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="py-4 px-2 align-middle">
-                          <span className="w-fit flex items-center justify-center rounded-full px-1 border border-gray-200  bg-[#F2F4F8] text-[#121619] hover:bg-gray-200 transition-colors text-[12px] font-normal">
-                            {child.statusPemanfaatan}
-                          </span>
+                          <select
+                            value={child.statusPemanfaatan}
+                            onChange={(e) =>
+                              handleEditChild(row.id, child.id, 'statusPemanfaatan', e.target.value)
+                            }
+                            className="w-full bg-[#F2F4F8] border border-gray-200 rounded-full px-2 py-1 text-[12px]"
+                          >
+                            {statusPemanfaatanOptions.map((item, index) => (
+                              <option key={index} value={item}>{item}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="py-4 px-4 text-right align-middle">
                           <button className="text-gray-400 hover:text-gray-600 p-1">
@@ -732,7 +796,7 @@ const PerbaikiDataLahanPage = () => {
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[550px] px-6 py-8 relative">
             {/* Tombol Close */}
             <button
-              onClick={() => setIsConfirmUploadOpen(true)}
+              onClick={() => setIsConfirmUploadOpen(false)}
               className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"
             >
               <svg
@@ -827,10 +891,7 @@ const PerbaikiDataLahanPage = () => {
 
                 <div className="mt-3 flex justify-end">
                   <button
-                    onClick={() => {
-                      setIsSuccessModalOpen(false);
-                      navigate('/dtphp/pencatatan/pemantauan');
-                    }}
+                    onClick={() => setIsSuccessModalOpen(false)}
                     className="px-6 py-2.5 rounded-lg border border-gray-300 bg-white text-[14px] text-[#111827] font-medium hover:bg-gray-50 transition-colors"
                   >
                     Tutup
@@ -922,4 +983,4 @@ const PerbaikiDataLahanPage = () => {
   );
 };
 
-export default PerbaikiDataLahanPage;
+export default DetailDataLahanPage;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const DetailDataPanenPage = () => {
     const navigate = useNavigate();
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
+    const [_isFilterApplied, setIsFilterApplied] = useState(false);
     const [selectedKomoditi, setSelectedKomoditi] = useState('Semua Komoditi');
     const [selectedBulan, setSelectedBulan] = useState('Semua Bulan');
     const [selectedYear, setSelectedYear] = useState('2020');
@@ -13,7 +13,7 @@ const DetailDataPanenPage = () => {
     const [isBulanOpen, setIsBulanOpen] = useState(false);
     const [isYearOpen, setIsYearOpen] = useState(false);
     const [isLocationOpen, setIsLocationOpen] = useState(false);
-    const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
+    const [selectedRows, _setSelectedRows] = useState([]); 
     const [expandedDesa, setExpandedDesa] = useState([]);
     const [showPercentage, setShowPercentage] = useState(true);
 
@@ -45,7 +45,7 @@ const DetailDataPanenPage = () => {
     const locationOptions = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
     // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
-    const [rows, setRows] = useState([
+    const [rows, _setRows] = useState([
         {
             id: 1,
             desa: 'Paseban',
@@ -363,35 +363,8 @@ const DetailDataPanenPage = () => {
 
     // LOGIKA CHECKBOX
     const allChildIds = filteredRows.flatMap(row => row.children.map(c => c.id));
-    const isAllChecked = allChildIds.length > 0 && selectedRows.length === allChildIds.length;
-    const isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
-
-    const toggleAll = () => {
-        if (isAllChecked) {
-            setSelectedRows([]);
-        } else {
-            setSelectedRows(allChildIds);
-        }
-    };
-
-    const toggleParent = (row) => {
-        const childIds = row.children.map(c => c.id);
-        const isAllSelected = childIds.every(id => selectedRows.includes(id));
-
-        if (isAllSelected) {
-            // Hapus semua child dari selectedRows
-            setSelectedRows(prev => prev.filter(id => !childIds.includes(id)));
-        } else {
-            // Tambahkan semua child ke selectedRows
-            setSelectedRows(prev => [...new Set([...prev, ...childIds])]);
-        }
-    };
-
-    const toggleRow = (childId) => {
-        setSelectedRows((prev) =>
-            prev.includes(childId) ? prev.filter((id) => id !== childId) : [...prev, childId]
-        );
-    };
+    const _isAllChecked = allChildIds.length > 0 && selectedRows.length === allChildIds.length;
+    const _isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
 
     const toggleDesa = (desaName) => {
         setExpandedDesa((prev) =>
@@ -467,7 +440,7 @@ const DetailDataPanenPage = () => {
         return { label, isPositive };
     };
 
-    const getChildTrend = (childId, year) => {
+    const _getChildTrend = (childId, year) => {
         const base = childId.split('').reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
         const y = parseInt(year, 10) || 0;
         let val = ((base + y * 7) % 31) - 15; // -15 .. 15
@@ -666,7 +639,7 @@ const DetailDataPanenPage = () => {
                             {filteredRows.map((row) => {
                                 const childIds = row.children.map(c => c.id);
                                 const isAllParentChecked = childIds.length > 0 && childIds.every(id => selectedRows.includes(id));
-                                const isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
+                                const _isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
 
                                 return (
                                     <React.Fragment key={row.id}>
@@ -751,14 +724,6 @@ const DetailDataPanenPage = () => {
                                         {/* Child Rows (Hanya muncul jika Desa di klik) */}
                                         {expandedDesa.includes(row.desa) && row.children.map((child) => (
                                             <tr key={child.id} className="bg-white hover:bg-gray-50 transition-colors">
-                                                <td className="py-4 px-4 text-center align-middle border-t border-transparent">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="w-[18px] h-[18px] rounded border-gray-300 cursor-pointer"
-                                                        checked={selectedRows.includes(child.id)}
-                                                        onChange={() => toggleRow(child.id)}
-                                                    />
-                                                </td>
                                                 <td className="py-4 px-2"></td>
                                                 <td className="py-4 px-2 align-middle">
                                                     <div className="flex items-center">

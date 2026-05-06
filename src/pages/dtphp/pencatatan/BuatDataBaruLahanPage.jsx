@@ -18,6 +18,7 @@ const BuatDataBaruLahanPage = () => {
     const yearDropdownRef = useRef(null);
     const locationDropdownRef = useRef(null);
 
+
     // Options untuk dropdown
     const jenisLahanOptions = ['Sawah Irigasi', 'Sawah Tadah Hujan', 'Tegalan', 'Kebun'];
     const statusKepemilikanOptions = ['Milik Sendiri', 'Sewa', 'Bagi Hasil', 'Lainnya'];

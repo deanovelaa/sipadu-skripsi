@@ -12,13 +12,10 @@ const ModalDataPanen = () => {
     const [isLocationOpen, setIsLocationOpen] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
     const [expandedDesa, setExpandedDesa] = useState([]);
-    // eslint-disable-next-line no-unused-vars
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
+    const [_isFilterApplied, setIsFilterApplied] = useState(false);
     const [showPercentage] = useState(true);
-    // eslint-disable-next-line no-unused-vars
-    const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
-    // eslint-disable-next-line no-unused-vars
-    const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
+    const [_isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+    const [_isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
     
     const komoditiDropdownRef = useRef(null);
     const bulanDropdownRef = useRef(null);
@@ -220,8 +217,7 @@ const ModalDataPanen = () => {
         );
 
     // LOGIKA CHECKBOX
-    // eslint-disable-next-line no-unused-vars
-    const toggleParent = (row) => {
+    const _toggleParent = (row) => {
         const childIds = row.children.map(c => c.id);
         const isAllSelected = childIds.every(id => selectedRows.includes(id));
 
@@ -266,8 +262,7 @@ const ModalDataPanen = () => {
         });
         return Array.from(names);
     };
-    // eslint-disable-next-line no-unused-vars
-    const firstSelectedKomoditi = getSelectedKomoditiNames()[0] || '-';
+    const _firstSelectedKomoditi = getSelectedKomoditiNames()[0] || '-';
 
     const renderTrendBadge = (clipId, label = '+90%', isPositive = true) => (
         <div

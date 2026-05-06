@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ModalDataLahanPage = () => {
   // --- States ---
-  const [activeTab, setActiveTab] = useState('Data Lahan Produksi');
+  const navigate = useNavigate();
+  const [activeTab] = useState('Data Lahan Produksi');
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedKecamatan, setSelectedKecamatan] = useState('Semua Kecamatan');
   const [expandedItems, setExpandedItems] = useState(['Kencong', 'Jagung', 'Padi']);

@@ -3,18 +3,22 @@ import { useNavigate } from 'react-router-dom';
 
 const DetailDataLahanPage = () => {
   const navigate = useNavigate();
-  const [isFilterApplied, setIsFilterApplied] = useState(false);
+  const [_isFilterApplied, setIsFilterApplied] = useState(false);
   const [selectedYear, setSelectedYear] = useState('2020');
   const [selectedLocation, setSelectedLocation] = useState('Kencong');
   const [desaSearch, setDesaSearch] = useState('');
   const [isYearOpen, setIsYearOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
+  const [selectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
   const [expandedDesa, setExpandedDesa] = useState([]);
   const [showPercentage, setShowPercentage] = useState(true);
-
   const [isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const jenisLahanOptions = ['Sawah Irigasi', 'Sawah Tadah Hujan', 'Tegalan', 'Kebun'];
+  const statusKepemilikanOptions = ['Milik Sendiri', 'Sewa', 'Bagi Hasil', 'Lainnya'];
+  const ketersediaanAirOptions = ['Irigasi Teknis', 'Irigasi Semi Teknis', 'Tadah Hujan', 'Lainnya'];
+  const statusPemanfaatanOptions = ['Aktif Ditanami', 'Tidak Aktif', 'Alih Fungsi', 'Rencana Pengembangan'];
 
   const yearDropdownRef = useRef(null);
   const locationDropdownRef = useRef(null);
@@ -22,6 +26,7 @@ const DetailDataLahanPage = () => {
   const years = ['2020', '2021', '2022', '2023', '2024', '2025'];
   const locations = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
+  
   // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
   const [rows, setRows] = useState([
     {
@@ -29,6 +34,7 @@ const DetailDataLahanPage = () => {
       desa: 'Paseban',
       location: 'Kencong',
       luasLahan: 6500,
+      isTotalUpdated: false, 
       children: [
         {
           id: 'c1-1',
@@ -61,6 +67,7 @@ const DetailDataLahanPage = () => {
       desa: 'Cakru',
       location: 'Kencong',
       luasLahan: 5200,
+      isTotalUpdated: false, 
       children: [
         {
           id: 'c2-1',
@@ -84,6 +91,7 @@ const DetailDataLahanPage = () => {
       id: 3,
       desa: 'Kraton',
       location: 'Kencong',
+      isTotalUpdated: false, 
       luasLahan: 4800,
       children: [
         {
@@ -109,6 +117,7 @@ const DetailDataLahanPage = () => {
       desa: 'Wonorejo',
       location: 'Kencong',
       luasLahan: 7300,
+      isTotalUpdated: false, 
       children: [
         {
           id: 'c4-1',
@@ -141,6 +150,7 @@ const DetailDataLahanPage = () => {
       desa: 'Kencong',
       location: 'Kencong',
       luasLahan: 6100,
+      isTotalUpdated: false, 
       children: [
         {
           id: 'c5-1',
@@ -173,6 +183,7 @@ const DetailDataLahanPage = () => {
       desa: 'Sumberejo',
       location: 'Kencong',
       luasLahan: 5400,
+      isTotalUpdated: false, 
       children: [
         {
           id: 'c6-1',
@@ -197,6 +208,7 @@ const DetailDataLahanPage = () => {
       desa: 'Kemuningsari',
       location: 'Kencong',
       luasLahan: 5900,
+      isTotalUpdated: false, 
       children: [
         {
           id: 'c7-1',
@@ -222,6 +234,7 @@ const DetailDataLahanPage = () => {
       desa: 'Karanganyar',
       location: 'Gumukmas',
       luasLahan: 4800,
+      isTotalUpdated: false, 
       children: [
         {
           id: 'g1-1',
@@ -246,6 +259,7 @@ const DetailDataLahanPage = () => {
       desa: 'Mayangan',
       location: 'Gumukmas',
       luasLahan: 5300,
+      isTotalUpdated: false, 
       children: [
         {
           id: 'g2-1',
@@ -270,6 +284,7 @@ const DetailDataLahanPage = () => {
       desa: 'Tembokrejo',
       location: 'Gumukmas',
       luasLahan: 4100,
+      isTotalUpdated: false, 
       children: [
         {
           id: 'g3-1',
@@ -290,7 +305,8 @@ const DetailDataLahanPage = () => {
       ],
     },
   ]);
-
+  
+  
   const filteredRows = rows.filter(
     (row) =>
       row.location === selectedLocation &&
@@ -299,44 +315,12 @@ const DetailDataLahanPage = () => {
 
   // LOGIKA CHECKBOX
   const allChildIds = filteredRows.flatMap(row => row.children.map(c => c.id));
-  const isAllChecked = allChildIds.length > 0 && selectedRows.length === allChildIds.length;
-  const isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
-
-  const toggleAll = () => {
-    if (isAllChecked) {
-      setSelectedRows([]);
-    } else {
-      setSelectedRows(allChildIds);
-    }
-  };
-
-  const toggleParent = (row) => {
-    const childIds = row.children.map(c => c.id);
-    const isAllSelected = childIds.every(id => selectedRows.includes(id));
-
-    if (isAllSelected) {
-      // Hapus semua child dari selectedRows
-      setSelectedRows(prev => prev.filter(id => !childIds.includes(id)));
-    } else {
-      // Tambahkan semua child ke selectedRows
-      setSelectedRows(prev => [...new Set([...prev, ...childIds])]);
-    }
-  };
-
-  const toggleRow = (childId) => {
-    setSelectedRows((prev) =>
-      prev.includes(childId) ? prev.filter((id) => id !== childId) : [...prev, childId]
-    );
-  };
+  const _isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
 
   const toggleDesa = (desaName) => {
     setExpandedDesa((prev) =>
       prev.includes(desaName) ? prev.filter((n) => n !== desaName) : [...prev, desaName]
     );
-  };
-
-  const handleSimpanDraft = () => {
-    setIsFilterApplied(true);
   };
 
   const renderTrendBadge = (clipId, label = '+90%', isPositive = true) => (
@@ -392,7 +376,29 @@ const DetailDataLahanPage = () => {
       </svg>
     </div>
   );
+  
+  const handleSimpanDraft = () => {
+    setRows((prevRows) =>
+      prevRows.map((row) => {
+        // Hanya update row yang sesuai dengan selectedLocation
+        if (row.location !== selectedLocation) return row;
 
+        // Hitung total luas lahan dari children
+        const totalLuasLahan = row.children.reduce((sum, child) => {
+          const value = Number(child.luasLahan) || 0;
+          return sum + value;
+        }, 0);
+
+        return {
+          ...row,
+          luasLahan: totalLuasLahan,
+          isTotalUpdated: true, 
+        };
+      })
+    );
+
+    console.log('TOTAL PER DESA DIPERBARUI!');
+  };
 
   const getParentTrend = (rowId, year) => {
     const y = parseInt(year, 10) || 0;
@@ -421,6 +427,27 @@ const DetailDataLahanPage = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const handleEditChild = (rowId, childId, field, value) => {
+  setRows((prevRows) =>
+    prevRows.map((row) => {
+      if (row.id !== rowId) return row;
+
+      return {
+        ...row,
+        children: row.children.map((child) =>
+          child.id === childId
+            ? {
+                ...child,
+                [field]: field === 'luasLahan' ? Number(value) : value,
+              }
+            : child
+        ),
+      };
+    })
+  );
+  };
+    
 
   return (
     <div className="w-full min-h-screen bg-[#F8FAFC] font-mona-sans">
@@ -541,15 +568,6 @@ const DetailDataLahanPage = () => {
           <table className="w-full text-left border-collapse table-fixed bg-white">
             <thead className="bg-[#F9FAFB] border-b border-gray-200">
               <tr>
-                {/* <th className="py-4 px-4 w-[60px] text-center align-middle border-r border-transparent">
-                  <input
-                    type="checkbox"
-                    className="w-[18px] h-[18px] rounded border-gray-300 accent-blue-600 cursor-pointer"
-                    checked={isAllChecked}
-                    ref={input => { if (input) input.indeterminate = isSomeChecked; }}
-                    onChange={toggleAll}
-                  />
-                </th> */}
                 <th className="py-4 px-2 pl-6 text-[13px] font-semibold text-[#111827] w-[25%]">Desa</th>
                 <th className="py-4 px-2 text-[13px] font-semibold text-[#111827] text-left w-[12%]">Luas Lahan (Ha.)</th>
                 <th className="py-4 px-2 text-[13px] font-semibold text-[#111827] text-left w-[15%]">Jenis Lahan</th>
@@ -563,21 +581,12 @@ const DetailDataLahanPage = () => {
               {filteredRows.map((row) => {
                 const childIds = row.children.map(c => c.id);
                 const isAllParentChecked = childIds.length > 0 && childIds.every(id => selectedRows.includes(id));
-                const isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
+                const _isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
 
                 return (
                   <React.Fragment key={row.id}>
                     {/* Parent Row (Desa) */}
                     <tr className="hover:bg-gray-50 transition-colors group">
-                      {/* <td className="py-3 px-4 text-center align-middle">
-                        <input
-                          type="checkbox"
-                          className="w-[18px] h-[18px] rounded border-gray-300 cursor-pointer"
-                          checked={isAllParentChecked}
-                          ref={input => { if (input) input.indeterminate = isSomeParentChecked; }}
-                          onChange={() => toggleParent(row)}
-                        />
-                      </td> */}
                       <td className="py-3 px-2 pr-6 " onClick={() => toggleDesa(row.desa)}>
                         <div className="flex items-center gap-2">
                           <svg className={`w-4 h-4 text-gray-500 transition-transform ${expandedDesa.includes(row.desa) ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -614,45 +623,75 @@ const DetailDataLahanPage = () => {
                     {/* Child Rows (Hanya muncul jika Desa di klik) */}
                     {expandedDesa.includes(row.desa) && row.children.map((child) => (
                       <tr key={child.id} className="bg-white hover:bg-gray-50 transition-colors">
-                        {/* <td className="py-4 px-4 text-center align-middle border-t border-transparent">
-                          <input
-                            type="checkbox"
-                            className="w-[18px] h-[18px] rounded border-gray-300 cursor-pointer"
-                            checked={selectedRows.includes(child.id)}
-                            onChange={() => toggleRow(child.id)}
-                          />
-                        </td> */}
+                        
                         <td className="py-4 px-2"></td>
                         <td className="py-4 px-2 align-middle">
                           <div className="flex items-center">
-                            <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                              {child.luasLahan.toLocaleString('id-ID')}
-                            </span>
+                            <input
+                              type="text"
+                              value={child.luasLahan}
+                              onChange={(e) =>
+                                handleEditChild(row.id, child.id, 'luasLahan', e.target.value)
+                              }
+                              className="inline-flex items-center justify-center px-1 py-1 w-[38px] text-[14px] text-[#111827] min-w-[64px] rounded-full bg-transparent outline-none text-center"
+                            />
                             {showPercentage && (() => {
                               const trend = getChildTrend(child.id, selectedYear);
                               return renderTrendBadge(`trend_child_${child.id}_${selectedYear}`, trend.label, trend.isPositive);
                             })()}
-                          </div>
+                          </div>                          
                         </td>
                         <td className="py-4 px-2 align-middle">
-                          <span className="w-fit flex items-center justify-center rounded-full px-1 border border-gray-200  bg-[#F2F4F8] text-[#121619] hover:bg-gray-200 transition-colors text-[12px] font-normal">
-                            {child.jenisLahan}
-                          </span>
+                          <select
+                            value={child.jenisLahan}
+                            onChange={(e) =>
+                              handleEditChild(row.id, child.id, 'jenisLahan', e.target.value)
+                            }
+                            className="w-full bg-[#F2F4F8] border border-gray-200 rounded-full px-2 py-1 text-[12px]"
+                          >
+                            {jenisLahanOptions.map((item, index) => (
+                              <option key={index} value={item}>{item}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="py-4 px-2 align-middle">
-                          <span className="w-fit flex items-center justify-center rounded-full px-1 border border-gray-200  bg-[#F2F4F8] text-[#121619] hover:bg-gray-200 transition-colors text-[12px] font-normal">
-                            {child.statusKepemilikan}
-                          </span>
+                          <select
+                            value={child.statusKepemilikan}
+                            onChange={(e) =>
+                              handleEditChild(row.id, child.id, 'statusKepemilikan', e.target.value)
+                            }
+                            className="w-full bg-[#F2F4F8] border border-gray-200 rounded-full px-2 py-1 text-[12px]"
+                          >
+                            {statusKepemilikanOptions.map((item, index) => (
+                              <option key={index} value={item}>{item}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="py-4 px-2 align-middle">
-                          <span className="w-fit flex items-center justify-center rounded-full px-1 border border-gray-200  bg-[#F2F4F8] text-[#121619] hover:bg-gray-200 transition-colors text-[12px] font-normal">
-                            {child.ketersediaanAir}
-                          </span>
+                          <select
+                            value={child.ketersediaanAir}
+                            onChange={(e) =>
+                              handleEditChild(row.id, child.id, 'ketersediaanAir', e.target.value)
+                            }
+                            className="w-full bg-[#F2F4F8] border border-gray-200 rounded-full px-2 py-1 text-[12px]"
+                          >
+                            {ketersediaanAirOptions.map((item, index) => (
+                              <option key={index} value={item}>{item}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="py-4 px-2 align-middle">
-                          <span className="w-fit flex items-center justify-center rounded-full px-1 border border-gray-200  bg-[#F2F4F8] text-[#121619] hover:bg-gray-200 transition-colors text-[12px] font-normal">
-                            {child.statusPemanfaatan}
-                          </span>
+                          <select
+                            value={child.statusPemanfaatan}
+                            onChange={(e) =>
+                              handleEditChild(row.id, child.id, 'statusPemanfaatan', e.target.value)
+                            }
+                            className="w-full bg-[#F2F4F8] border border-gray-200 rounded-full px-2 py-1 text-[12px]"
+                          >
+                            {statusPemanfaatanOptions.map((item, index) => (
+                              <option key={index} value={item}>{item}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="py-4 px-4 text-right align-middle">
                           <button className="text-gray-400 hover:text-gray-600 p-1">
