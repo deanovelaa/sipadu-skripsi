@@ -714,7 +714,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.luasTanam, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + Number(c.luasTanam), 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
@@ -724,7 +724,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.panenKotor, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + Number(c.panenKotor), 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
@@ -734,7 +734,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.panenBersih, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + Number(c.panenBersih), 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
@@ -744,7 +744,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.produktivitas, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + Number(c.produktivitas), 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
@@ -754,7 +754,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.produksi, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + Number(c.produksi), 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
