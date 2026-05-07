@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PerbaikiDataPanenPage = () => {
     const navigate = useNavigate();
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
+    const [_isFilterApplied, setIsFilterApplied] = useState(false);
     const [selectedKomoditi, setSelectedKomoditi] = useState('Semua Komoditi');
     const [selectedBulan, setSelectedBulan] = useState('Semua Bulan');
     const [selectedYear, setSelectedYear] = useState('2020');
@@ -16,8 +16,11 @@ const PerbaikiDataPanenPage = () => {
     const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
     const [expandedDesa, setExpandedDesa] = useState([]);
     const [showPercentage, setShowPercentage] = useState(true);
+    const [IsConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
 
-    const [isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
+    const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
+    const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+    const [isConfirmVerifikasiOpen, setIsConfirmVerifikasiOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
     const komoditiDropdownRef = useRef(null);
@@ -50,34 +53,34 @@ const PerbaikiDataPanenPage = () => {
             id: 1,
             desa: 'Paseban',
             location: 'Kencong',
-            luasLahan: 6500,
+            luasTanam: 6500,
             children: [
                 {
                     id: 'c1-1',
                     komoditi: 'Padi',
-                    luasLahan: 2500,
-                    jenisLahan: 'Sawah Irigasi',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Irigasi Teknis',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 2500,
+                    panenKotor: 2500,
+                    panenBersih: 2500,
+                    produktivitas: 2500,
+                    produksi: 2500,
                 },
                 {
                     id: 'c1-2',
                     komoditi: 'Jagung',
-                    luasLahan: 1500,
-                    jenisLahan: 'Sawah Tadah Hujan',
-                    statusKepemilikan: 'Sewa',
-                    ketersediaanAir: 'Tadah Hujan',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 1500,
+                    panenKotor: 1500,
+                    panenBersih: 1500,
+                    produktivitas: 1500,
+                    produksi: 1500,
                 },
                 {
                     id: 'c1-3',
                     komoditi: 'Kedelai',
-                    luasLahan: 2500,
-                    jenisLahan: 'Tegalan',
-                    statusKepemilikan: 'Bagi Hasil',
-                    ketersediaanAir: 'Irigasi Semi Teknis',
-                    statusPemanfaatan: 'Alih Fungsi',
+                    luasTanam: 2500,
+                    panenKotor: 2500,
+                    panenBersih: 2500,
+                    produktivitas: 2500,
+                    produksi: 2500,
                 },
             ],
         },
@@ -85,25 +88,25 @@ const PerbaikiDataPanenPage = () => {
             id: 2,
             desa: 'Cakru',
             location: 'Kencong',
-            luasLahan: 5200,
+            luasTanam: 5200,
             children: [
                 {
                     id: 'c2-1',
                     komoditi: 'Padi',
-                    luasLahan: 3200,
-                    jenisLahan: 'Sawah Irigasi',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Irigasi Teknis',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 3200,
+                    panenKotor: 3200,
+                    panenBersih: 3200,
+                    produktivitas: 3200,
+                    produksi: 3200,
                 },
                 {
                     id: 'c2-2',
                     komoditi: 'Teh',
-                    luasLahan: 2000,
-                    jenisLahan: 'Kebun',
-                    statusKepemilikan: 'Sewa',
-                    ketersediaanAir: 'Irigasi Semi Teknis',
-                    statusPemanfaatan: 'Rencana Pengembangan',
+                    luasTanam: 2000,
+                    panenKotor: 2000,
+                    panenBersih: 2000,
+                    produktivitas: 2000,
+                    produksi: 2000,
                 },
             ],
         },
@@ -111,25 +114,25 @@ const PerbaikiDataPanenPage = () => {
             id: 3,
             desa: 'Kraton',
             location: 'Kencong',
-            luasLahan: 4800,
+            luasTanam: 4800,
             children: [
                 {
                     id: 'c3-1',
                     komoditi: 'Jagung',
-                    luasLahan: 1800,
-                    jenisLahan: 'Sawah Tadah Hujan',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Tadah Hujan',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 1800,
+                    panenKotor: 1800,
+                    panenBersih: 1800,
+                    produktivitas: 1800,
+                    produksi: 1800,
                 },
                 {
                     id: 'c3-2',
                     komoditi: 'Kedelai',
-                    luasLahan: 3000,
-                    jenisLahan: 'Tegalan',
-                    statusKepemilikan: 'Bagi Hasil',
-                    ketersediaanAir: 'Irigasi Semi Teknis',
-                    statusPemanfaatan: 'Tidak Aktif',
+                    luasTanam: 3000,
+                    panenKotor: 3000,
+                    panenBersih: 3000,
+                    produktivitas: 3000,
+                    produksi: 3000,
                 },
             ],
         },
@@ -137,34 +140,34 @@ const PerbaikiDataPanenPage = () => {
             id: 4,
             desa: 'Wonorejo',
             location: 'Kencong',
-            luasLahan: 7300,
+            luasTanam: 7300,
             children: [
                 {
                     id: 'c4-1',
                     komoditi: 'Padi',
-                    luasLahan: 3300,
-                    jenisLahan: 'Sawah Irigasi',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Irigasi Teknis',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 3300,
+                    panenKotor: 3300,
+                    panenBersih: 3300,
+                    produktivitas: 3300,
+                    produksi: 3300,
                 },
                 {
                     id: 'c4-2',
                     komoditi: 'Teh',
-                    luasLahan: 2000,
-                    jenisLahan: 'Kebun',
-                    statusKepemilikan: 'Sewa',
-                    ketersediaanAir: 'Irigasi Semi Teknis',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 2000,
+                    panenKotor: 2000,
+                    panenBersih: 2000,
+                    produktivitas: 2000,
+                    produksi: 2000,
                 },
                 {
                     id: 'c4-3',
                     komoditi: 'Jagung',
-                    luasLahan: 2000,
-                    jenisLahan: 'Tegalan',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Tadah Hujan',
-                    statusPemanfaatan: 'Rencana Pengembangan',
+                    luasTanam: 2000,
+                    panenKotor: 2000,
+                    panenBersih: 2000,
+                    produktivitas: 2000,
+                    produksi: 2000,
                 },
             ],
         },
@@ -172,34 +175,34 @@ const PerbaikiDataPanenPage = () => {
             id: 5,
             desa: 'Kencong',
             location: 'Kencong',
-            luasLahan: 6100,
+            luasTanam: 6100,
             children: [
                 {
                     id: 'c5-1',
                     komoditi: 'Padi',
-                    luasLahan: 3100,
-                    jenisLahan: 'Sawah Irigasi',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Irigasi Teknis',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 3100,
+                    panenKotor: 3100,
+                    panenBersih: 3100,
+                    produktivitas: 3100,
+                    produksi: 3100,
                 },
                 {
                     id: 'c5-2',
                     komoditi: 'Jagung',
-                    luasLahan: 1500,
-                    jenisLahan: 'Sawah Tadah Hujan',
-                    statusKepemilikan: 'Sewa',
-                    ketersediaanAir: 'Tadah Hujan',
-                    statusPemanfaatan: 'Tidak Aktif',
+                    luasTanam: 1500,
+                    panenKotor: 1500,
+                    panenBersih: 1500,
+                    produktivitas: 1500,
+                    produksi: 1500,
                 },
                 {
                     id: 'c5-3',
                     komoditi: 'Kedelai',
-                    luasLahan: 1500,
-                    jenisLahan: 'Kebun',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Irigasi Semi Teknis',
-                    statusPemanfaatan: 'Alih Fungsi',
+                    luasTanam: 1500,
+                    panenKotor: 1500,
+                    panenBersih: 1500,
+                    produktivitas: 1500,
+                    produksi: 1500,
                 },
             ],
         },
@@ -207,25 +210,25 @@ const PerbaikiDataPanenPage = () => {
             id: 6,
             desa: 'Sumberejo',
             location: 'Kencong',
-            luasLahan: 5400,
+            luasTanam: 5400,
             children: [
                 {
                     id: 'c6-1',
                     komoditi: 'Padi',
-                    luasLahan: 2400,
-                    jenisLahan: 'Sawah Irigasi',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Irigasi Teknis',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 2400,
+                    panenKotor: 2400,
+                    panenBersih: 2400,
+                    produktivitas: 2400,
+                    produksi: 2400,
                 },
                 {
                     id: 'c6-2',
                     komoditi: 'Jagung',
-                    luasLahan: 3000,
-                    jenisLahan: 'Tegalan',
-                    statusKepemilikan: 'Bagi Hasil',
-                    ketersediaanAir: 'Tadah Hujan',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 3000,
+                    panenKotor: 3000,
+                    panenBersih: 3000,
+                    produktivitas: 3000,
+                    produksi: 3000,
                 },
             ],
         },
@@ -233,25 +236,25 @@ const PerbaikiDataPanenPage = () => {
             id: 7,
             desa: 'Kemuningsari',
             location: 'Kencong',
-            luasLahan: 5900,
+            luasTanam: 5900,
             children: [
                 {
                     id: 'c7-1',
                     komoditi: 'Padi',
-                    luasLahan: 2900,
-                    jenisLahan: 'Sawah Tadah Hujan',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Tadah Hujan',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 2900,
+                    panenKotor: 2900,
+                    panenBersih: 2900,
+                    produktivitas: 2900,
+                    produksi: 2900,
                 },
                 {
                     id: 'c7-2',
                     komoditi: 'Teh',
-                    luasLahan: 3000,
-                    jenisLahan: 'Kebun',
-                    statusKepemilikan: 'Sewa',
-                    ketersediaanAir: 'Irigasi Semi Teknis',
-                    statusPemanfaatan: 'Rencana Pengembangan',
+                    luasTanam: 3000,
+                    panenKotor: 3000,
+                    panenBersih: 3000,
+                    produktivitas: 3000,
+                    produksi: 3000,
                 },
             ],
         },
@@ -260,25 +263,25 @@ const PerbaikiDataPanenPage = () => {
             id: 8,
             desa: 'Karanganyar',
             location: 'Gumukmas',
-            luasLahan: 4800,
+            luasTanam: 4800,
             children: [
                 {
                     id: 'g1-1',
                     komoditi: 'Jagung',
-                    luasLahan: 2200,
-                    jenisLahan: 'Sawah Tadah Hujan',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Tadah Hujan',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 2200,
+                    panenKotor: 2200,
+                    panenBersih: 2200,
+                    produktivitas: 2200,
+                    produksi: 2200,
                 },
                 {
                     id: 'g1-2',
                     komoditi: 'Kedelai',
-                    luasLahan: 2600,
-                    jenisLahan: 'Tegalan',
-                    statusKepemilikan: 'Sewa',
-                    ketersediaanAir: 'Irigasi Semi Teknis',
-                    statusPemanfaatan: 'Rencana Pengembangan',
+                    luasTanam: 2600,
+                    panenKotor: 2600,
+                    panenBersih: 2600,
+                    produktivitas: 2600,
+                    produksi: 2600,
                 },
             ],
         },
@@ -286,25 +289,25 @@ const PerbaikiDataPanenPage = () => {
             id: 9,
             desa: 'Mayangan',
             location: 'Gumukmas',
-            luasLahan: 5300,
+            luasTanam: 5300,
             children: [
                 {
                     id: 'g2-1',
                     komoditi: 'Padi',
-                    luasLahan: 3000,
-                    jenisLahan: 'Sawah Irigasi',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Irigasi Teknis',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 3000,
+                    panenKotor: 3000,
+                    panenBersih: 3000,
+                    produktivitas: 3000,
+                    produksi: 3000,
                 },
                 {
                     id: 'g2-2',
                     komoditi: 'Teh',
-                    luasLahan: 2300,
-                    jenisLahan: 'Kebun',
-                    statusKepemilikan: 'Bagi Hasil',
-                    ketersediaanAir: 'Irigasi Semi Teknis',
-                    statusPemanfaatan: 'Tidak Aktif',
+                    luasTanam: 2300,
+                    panenKotor: 2300,
+                    panenBersih: 2300,
+                    produktivitas: 2300,
+                    produksi: 2300,
                 },
             ],
         },
@@ -312,25 +315,25 @@ const PerbaikiDataPanenPage = () => {
             id: 10,
             desa: 'Tembokrejo',
             location: 'Gumukmas',
-            luasLahan: 4100,
+            luasTanam: 4100,
             children: [
                 {
                     id: 'g3-1',
                     komoditi: 'Padi',
-                    luasLahan: 2100,
-                    jenisLahan: 'Sawah Irigasi',
-                    statusKepemilikan: 'Sewa',
-                    ketersediaanAir: 'Irigasi Teknis',
-                    statusPemanfaatan: 'Lahan Aktif Ditanami',
+                    luasTanam: 2100,
+                    panenKotor: 2100,
+                    panenBersih: 2100,
+                    produktivitas: 2100,
+                    produksi: 2100,
                 },
                 {
                     id: 'g3-2',
                     komoditi: 'Jagung',
-                    luasLahan: 2000,
-                    jenisLahan: 'Tegalan',
-                    statusKepemilikan: 'Milik Sendiri',
-                    ketersediaanAir: 'Tadah Hujan',
-                    statusPemanfaatan: 'Alih Fungsi',
+                    luasTanam: 2000,
+                    panenKotor: 2000,
+                    panenBersih: 2000,
+                    produktivitas: 2000,
+                    produksi: 2000,
                 },
             ],
         },
@@ -362,19 +365,9 @@ const PerbaikiDataPanenPage = () => {
         );
 
     // LOGIKA CHECKBOX
-    const allChildIds = filteredRows.flatMap(row => row.children.map(c => c.id));
-    const isAllChecked = allChildIds.length > 0 && selectedRows.length === allChildIds.length;
-    const isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
+    const _allChildIds = filteredRows.flatMap(row => row.children.map(c => c.id));
 
-    const toggleAll = () => {
-        if (isAllChecked) {
-            setSelectedRows([]);
-        } else {
-            setSelectedRows(allChildIds);
-        }
-    };
-
-    const toggleParent = (row) => {
+    const _toggleParent = (row) => {
         const childIds = row.children.map(c => c.id);
         const isAllSelected = childIds.every(id => selectedRows.includes(id));
 
@@ -387,7 +380,7 @@ const PerbaikiDataPanenPage = () => {
         }
     };
 
-    const toggleRow = (childId) => {
+    const _toggleRow = (childId) => {
         setSelectedRows((prev) =>
             prev.includes(childId) ? prev.filter((id) => id !== childId) : [...prev, childId]
         );
@@ -399,9 +392,17 @@ const PerbaikiDataPanenPage = () => {
         );
     };
 
-    const handleSimpanDraft = () => {
-        setIsFilterApplied(true);
+    // Mendapatkan nama desa pertama dari data yang dicentang untuk ditampilkan di Modal
+    const getSelectedDesaNames = () => {
+        const names = new Set();
+        rows.forEach(row => {
+            row.children.forEach(c => {
+                if (selectedRows.includes(c.id)) names.add(row.desa);
+            });
+        });
+        return Array.from(names);
     };
+    const firstSelectedDesa = getSelectedDesaNames()[0] || '-';
 
     const renderTrendBadge = (clipId, label = '+90%', isPositive = true) => (
         <div
@@ -457,6 +458,9 @@ const PerbaikiDataPanenPage = () => {
         </div>
     );
 
+    const handleSimpanDraft = () => {
+        setIsFilterApplied(true);
+    };
 
     const getParentTrend = (rowId, year) => {
         const y = parseInt(year, 10) || 0;
@@ -467,7 +471,7 @@ const PerbaikiDataPanenPage = () => {
         return { label, isPositive };
     };
 
-    const getChildTrend = (childId, year) => {
+    const _getChildTrend = (childId, year) => {
         const base = childId.split('').reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
         const y = parseInt(year, 10) || 0;
         let val = ((base + y * 7) % 31) - 15; // -15 .. 15
@@ -475,6 +479,28 @@ const PerbaikiDataPanenPage = () => {
         const isPositive = val > 0;
         const label = `${isPositive ? '+' : ''}${val}%`;
         return { label, isPositive };
+    };
+
+    const handleEditChild = (rowId, childId, field, value) => {
+    setRows(prevRows =>
+        prevRows.map(row => {
+            if (row.id !== rowId) return row;
+
+            return {
+                ...row,
+                children: row.children.map(child => {
+                    if (child.id !== childId) return child;
+
+                    return {
+                        ...child,
+                        [field]: field === 'luasTanam'
+                            ? Number(value) || 0
+                            : value
+                        };
+                    })
+                };
+            })
+        );
     };
 
     useEffect(() => {
@@ -534,7 +560,6 @@ const PerbaikiDataPanenPage = () => {
                     <div className="relative" ref={komoditiDropdownRef}>
                         <button
                             type="button"
-                            // disabled
                             onClick={() => {
                                 setIsKomoditiOpen(!isKomoditiOpen);
                                 setIsFilterApplied(true); // Tambahkan ini
@@ -619,7 +644,6 @@ const PerbaikiDataPanenPage = () => {
                     <div className="relative ml-auto" ref={locationDropdownRef}>
                         <button
                             type="button"
-                            disabled
                             onClick={() => setIsLocationOpen(!isLocationOpen)}
                             className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-lg bg-white text-gray-500 hover:border-gray-300 transition-all shadow-sm text-sm font-normal"
                         >
@@ -652,14 +676,13 @@ const PerbaikiDataPanenPage = () => {
                     <table className="w-full text-left border-collapse table-fixed bg-white">
                         <thead className="bg-[#F9FAFB] border-b border-gray-200">
                             <tr>
-                                
-                                <th className="py-4 px-2 pl-6 text-[13px] font-medium text-[#111827] w-[25%]">Desa</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] w-[25%]">Desa</th>
                                 <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Komoditi</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Luas Lahan (Ha.)</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[15%]">Jenis Lahan</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Status Kepemilikan</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[13%]">Ketersediaan Air</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[16%]">Status Pemanfaatan Lahan</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Luas Tanam (Ha.)</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[15%]">Panen Kotor (Ha.)</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Panen Bersih (Ha.)</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[13%]">Produktivitas (Ku/Ha)</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[16%]">Produksi (Ton)</th>
                                 <th className="py-4 px-4 w-[60px]" />
                             </tr>
                         </thead>
@@ -667,13 +690,13 @@ const PerbaikiDataPanenPage = () => {
                             {filteredRows.map((row) => {
                                 const childIds = row.children.map(c => c.id);
                                 const isAllParentChecked = childIds.length > 0 && childIds.every(id => selectedRows.includes(id));
-                                const isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
+                                const _isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
 
                                 return (
                                     <React.Fragment key={row.id}>
                                         {/* Parent Row (Desa) */}
                                         <tr className="hover:bg-gray-50 transition-colors group">
-                                           
+
                                             <td className="py-3 px-2 pr-6 " onClick={() => toggleDesa(row.desa)}>
                                                 <div className="flex items-center gap-2">
                                                     <svg className={`w-4 h-4 text-gray-500 transition-transform ${expandedDesa.includes(row.desa) ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -691,7 +714,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.luasLahan, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + c.luasTanam, 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
@@ -701,7 +724,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.luasLahan, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + c.panenKotor, 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
@@ -711,7 +734,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.luasLahan, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + c.panenBersih, 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
@@ -721,7 +744,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.luasLahan, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + c.produktivitas, 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
@@ -731,7 +754,7 @@ const PerbaikiDataPanenPage = () => {
                                             </td>
                                             <td className="py-3 px-2 align-middle"><div className="flex items-center">
                                                 <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                    {row.children.reduce((sum, c) => sum + c.luasLahan, 0).toLocaleString('id-ID')}
+                                                    {row.children.reduce((sum, c) => sum + c.produksi, 0).toLocaleString('id-ID')}
                                                 </span>
                                                 {showPercentage && (() => {
                                                     const trend = getParentTrend(row.id, selectedYear);
@@ -752,18 +775,10 @@ const PerbaikiDataPanenPage = () => {
                                         {/* Child Rows (Hanya muncul jika Desa di klik) */}
                                         {expandedDesa.includes(row.desa) && row.children.map((child) => (
                                             <tr key={child.id} className="bg-white hover:bg-gray-50 transition-colors">
-                                                {/* <td className="py-4 px-4 text-center align-middle border-t border-transparent">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="w-[18px] h-[18px] rounded border-gray-300 cursor-pointer"
-                                                        checked={selectedRows.includes(child.id)}
-                                                        onChange={() => toggleRow(child.id)}
-                                                    />
-                                                </td> */}
                                                 <td className="py-4 px-2"></td>
                                                 <td className="py-4 px-2 align-middle">
                                                     <div className="flex items-center">
-                                                        <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
+                                                        <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] bg-[#F2F4F8] min-w-[64px] rounded-full">
                                                             {child.komoditi}
                                                         </span>
 
@@ -771,9 +786,14 @@ const PerbaikiDataPanenPage = () => {
                                                 </td>
                                                 <td className="py-4 px-2 align-middle">
                                                     <div className="flex items-center">
-                                                        <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                            {row.luasLahan.toLocaleString('id-ID')}
-                                                        </span>
+                                                        <input
+                                                            type="number"
+                                                            value={child.luasTanam}
+                                                            onChange={(e) =>
+                                                                handleEditChild(row.id, child.id, 'luasTanam', e.target.value)
+                                                            }
+                                                            className="w-[80px] border rounded px-2 py-1 text-sm"
+                                                        />
                                                         {showPercentage && (() => {
                                                             const trend = getParentTrend(row.id, selectedYear);
                                                             return renderTrendBadge(`trend_parent_${row.id}_${selectedYear}`, trend.label, trend.isPositive);
@@ -782,9 +802,14 @@ const PerbaikiDataPanenPage = () => {
                                                 </td>
                                                 <td className="py-4 px-2 align-middle">
                                                     <div className="flex items-center">
-                                                        <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                            {row.luasLahan.toLocaleString('id-ID')}
-                                                        </span>
+                                                        <input
+                                                            type="number"
+                                                            value={child.panenKotor}
+                                                            onChange={(e) =>
+                                                                handleEditChild(row.id, child.id, 'panenKotor', e.target.value)
+                                                            }
+                                                            className="w-[80px] border rounded px-2 py-1 text-sm"
+                                                        />
                                                         {showPercentage && (() => {
                                                             const trend = getParentTrend(row.id, selectedYear);
                                                             return renderTrendBadge(`trend_parent_${row.id}_${selectedYear}`, trend.label, trend.isPositive);
@@ -793,9 +818,14 @@ const PerbaikiDataPanenPage = () => {
                                                 </td>
                                                 <td className="py-4 px-2 align-middle">
                                                     <div className="flex items-center">
-                                                        <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                            {row.luasLahan.toLocaleString('id-ID')}
-                                                        </span>
+                                                        <input
+                                                            type="number"
+                                                            value={child.panenBersih}
+                                                            onChange={(e) =>
+                                                                handleEditChild(row.id, child.id, 'panenBersih', e.target.value)
+                                                            }
+                                                            className="w-[80px] border rounded px-2 py-1 text-sm"
+                                                        />
                                                         {showPercentage && (() => {
                                                             const trend = getParentTrend(row.id, selectedYear);
                                                             return renderTrendBadge(`trend_parent_${row.id}_${selectedYear}`, trend.label, trend.isPositive);
@@ -804,10 +834,14 @@ const PerbaikiDataPanenPage = () => {
                                                 </td>
                                                 <td className="py-4 px-2 align-middle">
                                                     <div className="flex items-center">
-                                                        <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                            {row.luasLahan.toLocaleString('id-ID')}
-                                                        </span>
-                                                        {showPercentage && (() => {
+                                                        <input
+                                                            type="number"
+                                                            value={child.produktivitas}
+                                                            onChange={(e) =>
+                                                                handleEditChild(row.id, child.id, 'produktivitas', e.target.value)
+                                                            }
+                                                            className="w-[80px] border rounded px-2 py-1 text-sm"
+                                                        />                                                        {showPercentage && (() => {
                                                             const trend = getParentTrend(row.id, selectedYear);
                                                             return renderTrendBadge(`trend_parent_${row.id}_${selectedYear}`, trend.label, trend.isPositive);
                                                         })()}
@@ -815,9 +849,14 @@ const PerbaikiDataPanenPage = () => {
                                                 </td>
                                                 <td className="py-4 px-4 text-right align-middle">
                                                     <div className="flex items-center">
-                                                        <span className="inline-flex items-center justify-center px-3 py-1 text-[13px] text-[#111827] min-w-[64px] rounded-full ">
-                                                            {row.luasLahan.toLocaleString('id-ID')}
-                                                        </span>
+                                                        <input
+                                                            type="number"
+                                                            value={child.produksi}
+                                                            onChange={(e) =>
+                                                                handleEditChild(row.id, child.id, 'produksi', e.target.value)
+                                                            }
+                                                            className="w-[80px] border rounded px-2 py-1 text-sm"
+                                                        />
                                                         {showPercentage && (() => {
                                                             const trend = getParentTrend(row.id, selectedYear);
                                                             return renderTrendBadge(`trend_parent_${row.id}_${selectedYear}`, trend.label, trend.isPositive);
@@ -857,7 +896,7 @@ const PerbaikiDataPanenPage = () => {
                         </span>
                     </label>
 
-                    <div className="flex items-center gap-3">
+                                        <div className="flex items-center gap-3">
                         <button
                             type="button"
                             onClick={handleSimpanDraft}
@@ -871,7 +910,7 @@ const PerbaikiDataPanenPage = () => {
                         </button>
                         <button
                             type="button"
-                            onClick={() => setIsConfirmUploadOpen(true)}
+                            onClick={() => setIsConfirmVerifikasiOpen(true)}
                             className="flex items-center gap-2 px-5 py-2.5 bg-[#16A34A] border-2 border-[#16A34A] text-white hover:bg-[#15803D] transition-colors text-sm font-medium rounded-lg"
                         >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -881,12 +920,14 @@ const PerbaikiDataPanenPage = () => {
                         </button>
                     </div>
                 </div>
+
+                
             </div>
 
-            {/* Modal Konfirmasi Unggah */}
-            {isConfirmUploadOpen && (
+            {/* Modal Verifikasi */}
+            {isConfirmVerifikasiOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[550px] px-10 py-8 relative">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[550px] px-6 py-8 relative">
                         {/* Tombol Close */}
                         <button
                             onClick={() => setIsConfirmUploadOpen(false)}
@@ -919,22 +960,22 @@ const PerbaikiDataPanenPage = () => {
 
                             <div className="flex-1">
                                 <h3 className="text-[16px] font-semibold text-[#111827] mb-2">
-                                    Unggah Laporan?
+                                    Verifikasi Laporan?
                                 </h3>
                                 <p className="text-[14px] text-[#4B5563] leading-relaxed">
-                                    Laporan yang dibuat akan diunggah ke database. Anda dapat mengubahnya di halaman Database.
+                                    Laporan yang terverifikasi akan diunggah dan terverifikasi ke dalam database
                                 </p>
 
                                 <div className="mt-8 flex justify-end gap-4">
                                     <button
-                                        onClick={() => setIsConfirmUploadOpen(false)}
+                                        onClick={() => setIsConfirmVerifikasiOpen(false)}
                                         className="px-6 py-2.5 rounded-lg border border-gray-300 bg-white text-[14px] text-[#111827] font-medium hover:bg-gray-50 transition-colors"
                                     >
                                         Batalkan
                                     </button>
                                     <button
                                         onClick={() => {
-                                            setIsConfirmUploadOpen(false);
+                                            setIsConfirmVerifikasiOpen(false);
                                             setIsSuccessModalOpen(true);
                                         }}
                                         className="px-6 py-2.5 rounded-lg bg-[#111827] text-white text-[14px] font-medium hover:bg-black transition-colors"
@@ -955,11 +996,7 @@ const PerbaikiDataPanenPage = () => {
                     <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[400px] max-h-[280px] px-10 py-8 relative">
                         {/* Tombol Close */}
                         <button
-                            type="button"
-                            onClick={() => {
-                                setIsSuccessModalOpen(false);
-                                navigate('/kecamatan/pencatatan/pemantauan/detail/panen');
-                            }}
+                            onClick={() => setIsSuccessModalOpen(false)}
                             className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"
                         >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -988,17 +1025,95 @@ const PerbaikiDataPanenPage = () => {
 
                                 <div className="mt-3 flex justify-end">
                                     <button
-                                        type="button"
                                         onClick={() => {
-                                            setIsSuccessModalOpen(false);
-                                            navigate('/kecamatan/pencatatan/pemantauan/detail/panen');
-                                        }}
+                                            navigate('/dtphp/pencatatan/pemantauan')
+                                            setIsSuccessModalOpen(false)}}
+                                        
                                         className="px-6 py-2.5 rounded-lg border border-gray-300 bg-white text-[14px] text-[#111827] font-medium hover:bg-gray-50 transition-colors"
                                     >
                                         Tutup
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal Peringatan Laporkan */}
+            {isWarningModalOpen && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-[500px] p-6 relative animate-in fade-in zoom-in-95 duration-200">
+                        <button
+                            onClick={() => setIsWarningModalOpen(false)}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                        <div className="flex gap-4 items-start mt-2">
+                            <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                                <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="4" y="4" width="48" height="48" rx="24" fill="#FEE2E2" />
+                                    <rect x="4" y="4" width="48" height="48" rx="24" stroke="#FEF2F2" stroke-width="8" />
+                                    <path d="M28 35V35.01" stroke="#B91C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M28 31V21" stroke="#B91C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+                            </div>
+                            <div>
+                                <h3 className="text-[18px] font-bold text-gray-900 mb-1">Pilih Data Terlebih Dahulu</h3>
+                                <p className="text-[14px] text-gray-500">
+                                    Kamu belum memilih data yang ingin dilaporkan. Silakan pilih minimal satu data pada tabel sebelum melanjutkan proses pelaporan.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal Isi Laporkan */}
+            {isLaporkanModalOpen && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-[550px] p-8 relative animate-in fade-in zoom-in-95 duration-200">
+                        <button
+                            onClick={() => setIsLaporkanModalOpen(false)}
+                            className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                        <h2 className="text-[20px] font-bold text-gray-900 mb-1">Laporkan Data</h2>
+                        <p className="text-[14px] text-gray-500 mb-6">Pastikan data yang dipilih benar dan sertakan masukan komentar.</p>
+
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-6">
+                            <span className="text-[14px] text-gray-800 font-medium">Data Terpilih: {selectedRows.length} Data Lahan ({firstSelectedDesa}, dll)</span>
+                        </div>
+
+                        <div className="mb-8">
+                            <label className="block text-[14px] font-medium text-gray-700 mb-2">Masukan <span className="text-red-500">*</span></label>
+                            <textarea
+                                className="w-full border border-gray-300 rounded-lg p-3 text-[14px] focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none h-[100px]"
+                                defaultValue="Data mencurigakan, tolong periksa kembali"
+                            />
+                        </div>
+
+                        <div className="flex justify-end gap-3 w-full">
+                            <button
+                                onClick={() => setIsLaporkanModalOpen(false)}
+                                className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+                            >
+                                Batal
+                            </button>
+                            <button
+                            
+                                onClick={() => {
+                                    setIsLaporkanModalOpen(false);
+                                    setIsSuccessModalOpen(true);
+                                    
+                                }}
+                                className="px-6 py-2.5 rounded-lg bg-[#DC2626] text-white font-semibold hover:bg-red-700 transition-colors"
+                            >
+                                Laporkan
+                            </button>
                         </div>
                     </div>
                 </div>

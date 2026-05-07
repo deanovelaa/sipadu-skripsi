@@ -6,9 +6,9 @@ const EditPenggunaPage = () => {
     const navigate = useNavigate();
 
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-    const [isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
+    const [_isConfirmUploadOpen, setIsConfirmUploadOpen] = useState(false);
 
-    const [formData, setFormData] = useState({
+    const [formData, _setFormData] = useState({
         nama: 'Affendi Kos',
         kecamatan: 'Sumbersari',
         email: 'Desa@gmail.com',

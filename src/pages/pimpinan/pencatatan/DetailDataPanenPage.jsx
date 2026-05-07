@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const DetailDataPanenPage = () => {
     const navigate = useNavigate();
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
+    const [_isFilterApplied, setIsFilterApplied] = useState(false);
     const [selectedKomoditi, setSelectedKomoditi] = useState('Semua Komoditi');
     const [selectedBulan, setSelectedBulan] = useState('Semua Bulan');
     const [selectedYear, setSelectedYear] = useState('2020');
@@ -47,7 +47,7 @@ const DetailDataPanenPage = () => {
     const locationOptions = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
     // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
-    const [rows, setRows] = useState([
+    const [rows, _setRows] = useState([
         {
             id: 1,
             desa: 'Paseban',
@@ -366,8 +366,10 @@ const DetailDataPanenPage = () => {
     // LOGIKA CHECKBOX
     const allChildIds = filteredRows.flatMap(row => row.children.map(c => c.id));
     const isAllChecked = allChildIds.length > 0 && selectedRows.length === allChildIds.length;
+    // eslint-disable-next-line no-unused-vars
     const isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
 
+    // eslint-disable-next-line no-unused-vars
     const toggleAll = () => {
         if (isAllChecked) {
             setSelectedRows([]);
@@ -376,6 +378,7 @@ const DetailDataPanenPage = () => {
         }
     };
 
+    // eslint-disable-next-line no-unused-vars
     const toggleParent = (row) => {
         const childIds = row.children.map(c => c.id);
         const isAllSelected = childIds.every(id => selectedRows.includes(id));
@@ -401,6 +404,7 @@ const DetailDataPanenPage = () => {
         );
     };
 
+    // eslint-disable-next-line no-unused-vars
     const handleLaporkan = () => {
         if (selectedRows.length === 0) {
             setIsWarningModalOpen(true);
@@ -485,6 +489,7 @@ const DetailDataPanenPage = () => {
         return { label, isPositive };
     };
 
+    // eslint-disable-next-line no-unused-vars
     const getChildTrend = (childId, year) => {
         const base = childId.split('').reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
         const y = parseInt(year, 10) || 0;
@@ -524,7 +529,7 @@ const DetailDataPanenPage = () => {
                     </div>
                     <button
                         type="button"
-                        onClick={() => navigate('/dtphp/pencatatan/pemantauan')}
+                        onClick={() => navigate('/pimpinan/pencatatan/pemantauan')}
                         className="text-[#3B82F6] text-[14px] font-semibold hover:underline"
                     >
                         Ubah
@@ -679,11 +684,11 @@ const DetailDataPanenPage = () => {
                                 </th> */}
                                 <th className="py-4 px-2 text-[13px] font-medium text-[#111827] w-[25%]">Desa</th>
                                 <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Komoditi</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Luas Lahan (Ha.)</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[15%]">Jenis Lahan</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Status Kepemilikan</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[13%]">Ketersediaan Air</th>
-                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[16%]">Status Pemanfaatan Lahan</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Luas Tanam (Ha.)</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[15%]">Panen Kotor (Ha.)</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[12%]">Panen Bersih (Ha.)</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[13%]">Produktivitas (Ku/Ha)</th>
+                                <th className="py-4 px-2 text-[13px] font-medium text-[#111827] text-left w-[16%]">Produksi (Ton)</th>
                                 <th className="py-4 px-4 w-[60px]" />
                             </tr>
                         </thead>
@@ -691,6 +696,7 @@ const DetailDataPanenPage = () => {
                             {filteredRows.map((row) => {
                                 const childIds = row.children.map(c => c.id);
                                 const isAllParentChecked = childIds.length > 0 && childIds.every(id => selectedRows.includes(id));
+                                // eslint-disable-next-line no-unused-vars
                                 const isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
 
                                 return (
@@ -919,6 +925,7 @@ const DetailDataPanenPage = () => {
                     <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[550px] px-6 py-8 relative">
                         {/* Tombol Close */}
                         <button
+                            // eslint-disable-next-line no-undef
                             onClick={() => setIsConfirmUploadOpen(false)}
                             className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"
                         >
@@ -957,6 +964,7 @@ const DetailDataPanenPage = () => {
 
                                 <div className="mt-8 flex justify-end gap-4">
                                     <button
+                                        // eslint-disable-next-line no-undef
                                         onClick={() => setIsConfirmUploadOpen(false)}
                                         className="px-6 py-2.5 rounded-lg border border-gray-300 bg-white text-[14px] text-[#111827] font-medium hover:bg-gray-50 transition-colors"
                                     >

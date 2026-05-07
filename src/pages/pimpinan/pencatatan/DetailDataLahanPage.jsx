@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const DetailDataLahanPage = () => {
   const navigate = useNavigate();
-  const [isFilterApplied, setIsFilterApplied] = useState(false);
+  const [_isFilterApplied, setIsFilterApplied] = useState(false);
   const [selectedYear, setSelectedYear] = useState('2020');
   const [selectedLocation, setSelectedLocation] = useState('Kencong');
   const [desaSearch, setDesaSearch] = useState('');
@@ -458,7 +458,7 @@ const DetailDataLahanPage = () => {
           </div>
           <button
             type="button"
-            onClick={() => navigate('/dtphp/pencatatan/pemantauan')}
+            onClick={() => navigate('/pimpinan/pencatatan/pemantauan')}
             className="text-[#3B82F6] text-[14px] font-semibold hover:underline"
           >
             Ubah

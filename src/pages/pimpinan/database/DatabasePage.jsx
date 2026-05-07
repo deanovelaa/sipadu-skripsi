@@ -117,9 +117,10 @@ const DatabasePage = () => {
       if (selectedKecamatan === 'Semua Kecamatan') return true;
       return (item.kecamatans || []).some((k) => k.nama === selectedKecamatan);
     }).sort((a, b) => a.komoditi.localeCompare(b.komoditi, 'id'));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     activeTab,
-    effectiveYear,
+    selectedYear,
     selectedMonth,
     jenisKomoditi,
     komoditiSearch,

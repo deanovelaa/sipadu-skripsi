@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ModalDataPanen = () => {
-    const navigate = useNavigate();
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
+    const _navigate = useNavigate();
+    const [setIsFilterApplied] = useState(false);
     const [selectedKomoditi, setSelectedKomoditi] = useState('Semua Komoditi');
     const [selectedBulan, setSelectedBulan] = useState('Semua Bulan');
     const [selectedYear, setSelectedYear] = useState('2020');
@@ -15,12 +15,10 @@ const ModalDataPanen = () => {
     const [isLocationOpen, setIsLocationOpen] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
     const [expandedDesa, setExpandedDesa] = useState([]);
-    const [showPercentage, setShowPercentage] = useState(true);
+    const [showPercentage, _setShowPercentage] = useState(true);
 
-    const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
-    const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
-    const [isConfirmVerifikasiOpen, setIsConfirmVerifikasiOpen] = useState(false);
-    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+    const [_isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
+    const [_isWarningModalOpen, setIsWarningModalOpen] = useState(false);
 
     const komoditiDropdownRef = useRef(null);
     const bulanDropdownRef = useRef(null);
@@ -47,7 +45,7 @@ const ModalDataPanen = () => {
     const locationOptions = ['Semua Kecamatan','Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
     // STRUKTUR DATA: Komoditi sebagai parent, kecamatan sebagai child
-    const [rows, setRows] = useState([
+    const [rows, _setRows] = useState([
         {
             id: 1,
             komoditi: 'Padi',
@@ -224,9 +222,9 @@ const ModalDataPanen = () => {
     // LOGIKA CHECKBOX
     const allChildIds = filteredRows.flatMap(row => row.children.map(c => c.id));
     const isAllChecked = allChildIds.length > 0 && selectedRows.length === allChildIds.length;
-    const isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
+    const _isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
 
-    const toggleAll = () => {
+    const _toggleAll = () => {
         if (isAllChecked) {
             setSelectedRows([]);
         } else {
@@ -234,7 +232,7 @@ const ModalDataPanen = () => {
         }
     };
 
-    const toggleParent = (row) => {
+    const _toggleParent = (row) => {
         const childIds = row.children.map(c => c.id);
         const isAllSelected = childIds.every(id => selectedRows.includes(id));
 
@@ -247,7 +245,7 @@ const ModalDataPanen = () => {
         }
     };
 
-    const toggleRow = (childId) => {
+    const _toggleRow = (childId) => {
         setSelectedRows((prev) =>
             prev.includes(childId) ? prev.filter((id) => id !== childId) : [...prev, childId]
         );
@@ -259,7 +257,7 @@ const ModalDataPanen = () => {
         );
     };
 
-    const handleLaporkan = () => {
+    const _handleLaporkan = () => {
         if (selectedRows.length === 0) {
             setIsWarningModalOpen(true);
             return;
@@ -277,7 +275,7 @@ const ModalDataPanen = () => {
         });
         return Array.from(names);
     };
-    const firstSelectedKomoditi = getSelectedKomoditiNames()[0] || '-';
+    const _firstSelectedKomoditi = getSelectedKomoditiNames()[0] || '-';
 
     const renderTrendBadge = (clipId, label = '+90%', isPositive = true) => (
         <div
@@ -544,7 +542,7 @@ const ModalDataPanen = () => {
                             {filteredRows.map((row) => {
                                 const childIds = row.children.map(c => c.id);
                                 const isAllParentChecked = childIds.length > 0 && childIds.every(id => selectedRows.includes(id));
-                                const isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
+                                const _isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
 
                                 return (
                                     <React.Fragment key={row.id}>

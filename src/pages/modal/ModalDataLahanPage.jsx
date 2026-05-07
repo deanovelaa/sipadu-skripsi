@@ -1,14 +1,17 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const ModalDataLahanPage = () => {
   // --- States ---
-  const [activeTab, setActiveTab] = useState('Data Lahan Produksi');
+  const [activeTab] = useState('Data Lahan Produksi');
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedKecamatan, setSelectedKecamatan] = useState('Semua Kecamatan');
   const [expandedItems, setExpandedItems] = useState(['Kencong', 'Jagung', 'Padi']);
   const [isSearchTriggered, setIsSearchTriggered] = useState(true);
   const [komoditiSearch, setKomoditiSearch] = useState('');
+  const navigate = useNavigate();
 
   // --- Data Source Lengkap (2020 - 2025) ---
   const allData = {
@@ -48,6 +51,7 @@ const ModalDataLahanPage = () => {
   };
 
   // --- Logic Filter ---
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const filteredData = useMemo(() => {
     const yearToFilter = selectedYear;
     if (!isSearchTriggered && activeTab === 'Data Produksi Panen') return allData[activeTab];
@@ -61,8 +65,8 @@ const ModalDataLahanPage = () => {
         : item.komoditi?.toLowerCase().includes(komoditiSearch.trim().toLowerCase());
       return matchYear && matchKec && matchKomoditi;
     });
-  }, [activeTab, selectedYear, selectedKecamatan, isSearchTriggered, komoditiSearch]);
-
+  }, );
+[activeTab, selectedYear, selectedKecamatan, isSearchTriggered, komoditiSearch]
   // --- Handlers ---
   const toggleExpand = (id) => {
     setExpandedItems(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]);
@@ -256,7 +260,7 @@ const ModalDataLahanPage = () => {
                           </>
                         )}
                         <td colSpan={activeTab === 'Data Lahan Produksi' ? 4 : 0}> </td>
-                        <td className="py-5 px-6 text-right font-normal"><button className="text-[#697077] hover:text-gray-600 transition-colors" onClick={() => navigate(`/dtphp/pencatatan/pemantauan/detail/lahan`)}>
+                        <td className="py-5 px-6 text-right font-normal"><button className="text-[#697077] hover:text-gray-600 transition-colors" onClick={() => navigate(`/kecamatan/pencatatan/pemantauan/detail/lahan`)}>
                           <svg
                             className="w-5 h-5 transform rotate-90"
                             fill="none"
@@ -305,7 +309,7 @@ const ModalDataLahanPage = () => {
                               ))}
                             </>
                           )}
-                          <td className="py-3 px-6 text-right font-normal"><button className="text-[#697077] hover:text-gray-600 transition-colors" onClick={() => navigate(`/dtphp/pencatatan/pemantauan/detail/lahan`)}>
+                          <td className="py-3 px-6 text-right font-normal"><button className="text-[#697077] hover:text-gray-600 transition-colors" onClick={() => navigate(`/kecamatan/pencatatan/pemantauan/detail/lahan`)}>
                             <svg
                               className="w-5 h-5 transform rotate-90"
                               fill="none"

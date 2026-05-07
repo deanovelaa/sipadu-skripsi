@@ -22,7 +22,7 @@ const PenggunaPage = () => {
   const [users, setUsers] = useState(loadUsers);
   const [isConfirmNonaktifOpen, setIsConfirmNonaktifOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [openActionMenu, setOpenActionMenu] = useState(null);
   const actionMenuRef = useRef(null);
@@ -33,7 +33,7 @@ const PenggunaPage = () => {
     user.peran.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const toggleActionMenu = (userId) => {
+  const _toggleActionMenu = (userId) => {
     setOpenActionMenu(openActionMenu === userId ? null : userId);
   };
 
@@ -47,7 +47,7 @@ const PenggunaPage = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const openNonaktifModal = (userId) => {
+  const _openNonaktifModal = (userId) => {
     setOpenActionMenu(null);
     setSelectedUserId(userId);
     setIsConfirmNonaktifOpen(true);

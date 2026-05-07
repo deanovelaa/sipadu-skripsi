@@ -51,6 +51,7 @@ const ModalDataLahanPage = () => {
   };
 
   // --- Logic Filter ---
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const filteredData = useMemo(() => {
     const yearToFilter = selectedYear;
     if (!isSearchTriggered && activeTab === 'Data Produksi Panen') return allData[activeTab];
