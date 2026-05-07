@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PerbaikiDataPanenPage = () => {
     const navigate = useNavigate();
-    const [isFilterApplied, setIsFilterApplied] = useState(false);
+    const [_isFilterApplied, setIsFilterApplied] = useState(false);
     const [selectedKomoditi, setSelectedKomoditi] = useState('Semua Komoditi');
     const [selectedBulan, setSelectedBulan] = useState('Semua Bulan');
     const [selectedYear, setSelectedYear] = useState('2020');
@@ -47,7 +47,7 @@ const PerbaikiDataPanenPage = () => {
     const locationOptions = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
     // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
-    const [rows, setRows] = useState([
+    const [rows, _setRows] = useState([
         {
             id: 1,
             desa: 'Paseban',
@@ -485,7 +485,7 @@ const PerbaikiDataPanenPage = () => {
         return { label, isPositive };
     };
 
-    const getChildTrend = (childId, year) => {
+    const _getChildTrend = (childId, year) => {
         const base = childId.split('').reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
         const y = parseInt(year, 10) || 0;
         let val = ((base + y * 7) % 31) - 15; // -15 .. 15
@@ -919,7 +919,7 @@ const PerbaikiDataPanenPage = () => {
                     <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[550px] px-6 py-8 relative">
                         {/* Tombol Close */}
                         <button
-                            onClick={() => setIsConfirmUploadOpen(false)}
+                            onClick={() => setIsConfirmVerifikasiOpen(false)}
                             className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"
                         >
                             <svg
@@ -957,7 +957,7 @@ const PerbaikiDataPanenPage = () => {
 
                                 <div className="mt-8 flex justify-end gap-4">
                                     <button
-                                        onClick={() => setIsConfirmUploadOpen(false)}
+                                        onClick={() => setIsConfirmVerifikasiOpen(false)}
                                         className="px-6 py-2.5 rounded-lg border border-gray-300 bg-white text-[14px] text-[#111827] font-medium hover:bg-gray-50 transition-colors"
                                     >
                                         Batalkan

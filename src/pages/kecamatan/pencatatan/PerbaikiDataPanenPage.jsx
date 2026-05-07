@@ -644,7 +644,6 @@ const PerbaikiDataPanenPage = () => {
                     <div className="relative ml-auto" ref={locationDropdownRef}>
                         <button
                             type="button"
-                            onClick={() => setIsLocationOpen(!isLocationOpen)}
                             className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-lg bg-white text-gray-500 hover:border-gray-300 transition-all shadow-sm text-sm font-normal"
                         >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">

@@ -231,11 +231,6 @@ const BuatDataBaruLahanPage = () => {
         return () => document.removeEventListener('mousedown', handleClickOutsideDropdowns);
     }, []);
 
-    // Reset expanded desa ketika tahun berubah
-    useEffect(() => {
-        setExpandedDesa([]);
-    }, [selectedYear]);
-
     return (
         <div className="w-full min-h-screen bg-[#F8FAFC]">
             {/* Dark Header */}
@@ -574,7 +569,7 @@ const BuatDataBaruLahanPage = () => {
                                                 </tr>
 
                                                 {/* Expanded Child Rows */}
-                                                {expandedDesa.includes(desa.name) && ((desaEntriesByYear[selectedYear] || {})[desa.name] || []).map((entry, entryIdx) => {
+                                                {expandedDesa.includes(desa.name) && ((desaEntriesByYear[selectedYear] || {})[desa.name] || []).map((entry) => {
                                                     const dropdownKey = (field) => `${desa.name}_${entry.id}_${field}`;
                                                     const isOpen = (field) => openDropdowns[dropdownKey(field)] || false;
 

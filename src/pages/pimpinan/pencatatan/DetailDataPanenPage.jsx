@@ -392,7 +392,7 @@ const DetailDataPanenPage = () => {
         }
     };
 
-    const toggleRow = (childId) => {
+    const _toggleRow = (childId) => {
         setSelectedRows((prev) =>
             prev.includes(childId) ? prev.filter((id) => id !== childId) : [...prev, childId]
         );
@@ -790,14 +790,6 @@ const DetailDataPanenPage = () => {
                                         {/* Child Rows (Hanya muncul jika Desa di klik) */}
                                         {expandedDesa.includes(row.desa) && row.children.map((child) => (
                                             <tr key={child.id} className="bg-white hover:bg-gray-50 transition-colors">
-                                                <td className="py-4 px-4 text-center align-middle border-t border-transparent">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="w-[18px] h-[18px] rounded border-gray-300 cursor-pointer"
-                                                        checked={selectedRows.includes(child.id)}
-                                                        onChange={() => toggleRow(child.id)}
-                                                    />
-                                                </td>
                                                 <td className="py-4 px-2"></td>
                                                 <td className="py-4 px-2 align-middle">
                                                     <div className="flex items-center">

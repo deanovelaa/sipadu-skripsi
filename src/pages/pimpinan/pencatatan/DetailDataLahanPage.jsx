@@ -25,7 +25,7 @@ const DetailDataLahanPage = () => {
   const locations = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
   // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
-  const [rows, setRows] = useState([
+  const [rows, _setRows] = useState([
     {
       id: 1,
       desa: 'Paseban',
@@ -301,31 +301,10 @@ const DetailDataLahanPage = () => {
 
   // LOGIKA CHECKBOX
   const allChildIds = filteredRows.flatMap(row => row.children.map(c => c.id));
-  const isAllChecked = allChildIds.length > 0 && selectedRows.length === allChildIds.length;
-  const isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
+  const _isAllChecked = allChildIds.length > 0 && selectedRows.length === allChildIds.length;
+  const _isSomeChecked = selectedRows.length > 0 && selectedRows.length < allChildIds.length;
 
-  const toggleAll = () => {
-    if (isAllChecked) {
-      setSelectedRows([]);
-    } else {
-      setSelectedRows(allChildIds);
-    }
-  };
-
-  const toggleParent = (row) => {
-    const childIds = row.children.map(c => c.id);
-    const isAllSelected = childIds.every(id => selectedRows.includes(id));
-
-    if (isAllSelected) {
-      // Hapus semua child dari selectedRows
-      setSelectedRows(prev => prev.filter(id => !childIds.includes(id)));
-    } else {
-      // Tambahkan semua child ke selectedRows
-      setSelectedRows(prev => [...new Set([...prev, ...childIds])]);
-    }
-  };
-
-  const toggleRow = (childId) => {
+  const _toggleRow = (childId) => {
     setSelectedRows((prev) =>
       prev.includes(childId) ? prev.filter((id) => id !== childId) : [...prev, childId]
     );
@@ -337,7 +316,7 @@ const DetailDataLahanPage = () => {
     );
   };
 
-  const handleLaporkan = () => {
+  const _handleLaporkan = () => {
     if (selectedRows.length === 0) {
       setIsWarningModalOpen(true);
       return;
@@ -580,7 +559,7 @@ const DetailDataLahanPage = () => {
               {filteredRows.map((row) => {
                 const childIds = row.children.map(c => c.id);
                 const isAllParentChecked = childIds.length > 0 && childIds.every(id => selectedRows.includes(id));
-                const isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
+                const _isSomeParentChecked = childIds.some(id => selectedRows.includes(id)) && !isAllParentChecked;
 
                 return (
                   <React.Fragment key={row.id}>
@@ -631,14 +610,6 @@ const DetailDataLahanPage = () => {
                     {/* Child Rows (Hanya muncul jika Desa di klik) */}
                     {expandedDesa.includes(row.desa) && row.children.map((child) => (
                       <tr key={child.id} className="bg-white hover:bg-gray-50 transition-colors">
-                        <td className="py-4 px-4 text-center align-middle border-t border-transparent">
-                          <input
-                            type="checkbox"
-                            className="w-[18px] h-[18px] rounded border-gray-300 cursor-pointer"
-                            checked={selectedRows.includes(child.id)}
-                            onChange={() => toggleRow(child.id)}
-                          />
-                        </td>
                         <td className="py-4 px-2"></td>
                         <td className="py-4 px-2 align-middle">
                           <div className="flex items-center">
@@ -725,13 +696,13 @@ const DetailDataLahanPage = () => {
         </div>
       </div>
 
-      {/* Modal Verifikasi */}
+      Modal Verifikasi
       {isConfirmVerifikasiOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[550px] px-6 py-8 relative">
             {/* Tombol Close */}
             <button
-              onClick={() => setIsConfirmUploadOpen(false)}
+              onClick={() => setIsConfirmVerifikasiOpen(false)}
               className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"
             >
               <svg
@@ -769,7 +740,7 @@ const DetailDataLahanPage = () => {
 
                 <div className="mt-8 flex justify-end gap-4">
                   <button
-                    onClick={() => setIsConfirmUploadOpen(false)}
+                    onClick={() => setIsConfirmVerifikasiOpen(false)}
                     className="px-6 py-2.5 rounded-lg border border-gray-300 bg-white text-[14px] text-[#111827] font-medium hover:bg-gray-50 transition-colors"
                   >
                     Batalkan

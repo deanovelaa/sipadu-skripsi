@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 const PerbaikiDataLahanPage = () => {
   const navigate = useNavigate();
-  const [isFilterApplied, setIsFilterApplied] = useState(false);
   const [selectedYear, setSelectedYear] = useState('2020');
   const [selectedLocation, setSelectedLocation] = useState('Kencong');
   const [desaSearch, setDesaSearch] = useState('');
@@ -12,6 +11,7 @@ const PerbaikiDataLahanPage = () => {
   const [selectedRows, setSelectedRows] = useState([]); // Menyimpan ID data (child) yang dicentang
   const [expandedDesa, setExpandedDesa] = useState([]);
   const [showPercentage, setShowPercentage] = useState(true);
+  const [_isFilterApplied, setIsFilterApplied] = useState(false);
 
   const [isLaporkanModalOpen, setIsLaporkanModalOpen] = useState(false);
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
@@ -25,7 +25,7 @@ const PerbaikiDataLahanPage = () => {
   const locations = ['Kencong', 'Gumukmas', 'Puger', 'Wuluhan', 'Ambulu'];
 
   // STRUKTUR DATA DIPERBARUI: Ditambahkan 'children' untuk menampung rincian data
-  const [rows, setRows] = useState([
+  const [rows, _setRows] = useState([
     {
       id: 1,
       desa: 'Paseban',
@@ -731,7 +731,7 @@ const PerbaikiDataLahanPage = () => {
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[550px] px-6 py-8 relative">
             {/* Tombol Close */}
             <button
-              onClick={() => setIsConfirmUploadOpen(false)}
+              onClick={() => setIsConfirmVerifikasiOpen(false)}
               className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"
             >
               <svg
@@ -769,7 +769,7 @@ const PerbaikiDataLahanPage = () => {
 
                 <div className="mt-8 flex justify-end gap-4">
                   <button
-                    onClick={() => setIsConfirmUploadOpen(false)}
+                    onClick={() => setIsConfirmVerifikasiOpen(false)}
                     className="px-6 py-2.5 rounded-lg border border-gray-300 bg-white text-[14px] text-[#111827] font-medium hover:bg-gray-50 transition-colors"
                   >
                     Batalkan

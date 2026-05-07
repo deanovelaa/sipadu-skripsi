@@ -530,7 +530,6 @@ const PerbaikiDataLahanPage = () => {
             <button
               type="button"
               disabled
-              onClick={() => setIsLocationOpen((prev) => !prev)}
               className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg bg-white text-gray-600 hover:border-gray-300 transition-all text-[14px]"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

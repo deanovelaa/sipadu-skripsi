@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, _useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -19,25 +19,8 @@ const loadProgress = () => {
 };
 
 const ProgressPage = () => {
-    const [progress, setProgress] = useState(loadProgress);
+    const [progress, _setProgress] = useState(loadProgress);
     const navigate = useNavigate();
-
-
-    const toggleActionMenu = (userId) => {
-        setOpenActionMenu(openActionMenu === userId ? null : userId);
-    };
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (actionMenuRef.current && !actionMenuRef.current.contains(event.target)) {
-                setOpenActionMenu(null);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-
 
     return (
         <div className="w-full min-h-screen bg-[#F8FAFC]">
